@@ -1,17 +1,13 @@
 <template>
+  <!-- Header is visible only for large screens -->
   <Header/>
+  <!-- Here is the content of the page:-->
+  <router-view />
+  <!-- Footer is visible only for small screens -->
   <Footer/>
 </template>
 
-<script>
+<script setup>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
-
-export default {
-  name: 'App',
-  components: {
-    Header,
-    Footer
-  }
-}
 </script>
