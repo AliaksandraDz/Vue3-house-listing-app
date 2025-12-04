@@ -1,10 +1,10 @@
 <template>
   <!-- Header is visible only for large screens -->
-  <Header/>
+  <Header />
   <!-- Here is the content of the page:-->
   <router-view />
   <!-- Footer is visible only for small screens -->
-  <Footer/>
+  <Footer />
 </template>
 
 <script setup>
