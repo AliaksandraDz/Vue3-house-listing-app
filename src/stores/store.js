@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia';
 import { baseUrl } from '../shared/baseUrl';
+import { apiKey } from '../shared/apiKey';
 
-export const useHouseStore = defineStore('houseStore', {
+export const useStore = defineStore('store', {
     state: () => ({
       houses: [],
-      isActive: 'price',
-      searchInput: '',
     }),
     actions: {
       async getHouses() {
@@ -18,7 +17,7 @@ export const useHouseStore = defineStore('houseStore', {
         const data = await res.json();
         this.houses = data;
         if(res.error) {
-          console.log(res.error),
+          console.log(res.error);
         };
       },
     },
