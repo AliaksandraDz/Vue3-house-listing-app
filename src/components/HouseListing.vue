@@ -1,6 +1,5 @@
 <template>
   <article class="house-card">
-    <!-- <img class="house-card-image" src="../assets/img_placeholder_house@3x.png" alt="House"/> -->
     <img class="house-card-image" :src="house.image" alt="House"/>
     <div class="house-card-info">
       <h3 class="house-card-title">{{ house.location.street }} {{ house.location.houseNumber }}</h3>

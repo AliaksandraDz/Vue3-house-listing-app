@@ -1,4 +1,10 @@
-/* CSS Reset */
+
+  
+
+
+  /* =========================
+   CSS Reset
+   ========================= */
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -39,13 +45,15 @@
     text-wrap: balance;
   }
   
-  #root, #__next {
+  #root, #-next {
     isolation: isolate;
   }
-
-/* Define color variables: */
-
-:root {
+  
+  /* =========================
+     Color variables
+     ========================= */
+  
+  :root {
     --black: #000000;
     --dark-grey: #4A4B4C;
     --blue: #067BC2;
@@ -54,45 +62,51 @@
     --grey: #C3C3C3;
     --soft-white: #F6F6F6;
     --white: #FFFFFF;
-}
-
-/* header */
-header {
+  }
+  
+  /* =========================
+     Header / Footer
+     ========================= */
+  
+  header {
     background: var(--white);
     height: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.nav-header {
+  }
+  
+  .nav-header {
     width: 70%;
-    display:flex;
+    display: flex;
     align-items: center;
-}
-.nav-header img {
+  }
+  
+  .nav-header img {
     max-width: 60px;
-    padding: 0 20px 0 0
-}
-.nav-header a {
+    padding: 0 20px 0 0;
+  }
+  
+  .nav-header a {
     padding: 20px;
     color: var(--dark-grey);
     text-decoration: none;
     font-size: 18px;
-}
-.nav-header a.router-link-active {
+  }
+  
+  .nav-header a.router-link-active {
     color: var(--black);
     font-weight: bold;
-}
-
-/* Small devices */
-@media (max-width: 1000px) {
+  }
+  
+  /* Hide header on small devices */
+  @media (max-width: 768px) {
     header {
-        display: none;
+      display: none;
     }
-}
-
-/* footer */
-footer {
+  }
+  
+  footer {
     position: fixed;
     bottom: 0;
     background: var(--white);
@@ -101,169 +115,436 @@ footer {
     justify-content: center;
     align-items: center;
     width: 100%;
-}
-.nav-footer {
-    display:flex;
+  }
+  
+  .nav-footer {
+    display: flex;
     align-items: center;
-}
-.nav-footer a {
+  }
+  
+  .nav-footer a {
     padding: 0 20px;
     color: var(--dark-grey);
     text-decoration: none;
-}
-.btn-home {
-    content:url("./ic_mobile_navigarion_home@3x.png")
-}
-a.router-link-exact-active .btn-home {
-    content:url("./ic_mobile_navigarion_home_active@3x.png")
-}
-.btn-about {
-    content:url("./ic_mobile_navigarion_info@3x.png")
-}
-a.router-link-exact-active .btn-about {
-    content:url("./ic_mobile_navigarion_info_active@3x.png")
-}
-.nav-footer img {
+  }
+  
+  /* mobile nav icons */
+  .btn-home {
+    content: url("./ic_mobile_navigarion_home@3x.png");
+  }
+  a.router-link-exact-active .btn-home {
+    content: url("./ic_mobile_navigarion_home_active@3x.png");
+  }
+  .btn-about {
+    content: url("./ic_mobile_navigarion_info@3x.png");
+  }
+  a.router-link-exact-active .btn-about {
+    content: url("./ic_mobile_navigarion_info_active@3x.png");
+  }
+  
+  .nav-footer img {
     max-width: 40px;
     margin: 0 100px;
-}
-.btn-home {
+  }
+  
+  .btn-home {
     float: left;
-}
-.btn-about {
+  }
+  .btn-about {
     float: right;
-}
-/* Large devices */
-@media (min-width: 1000px) {
+  }
+  
+  /* Hide footer on large devices */
+  @media (min-width: 767px) {
     footer {
-        display: none;
+      display: none;
     }
-}
-
-/* Body */
-
-body {
+  }
+  
+  /* =========================
+     Base typography & body
+     ========================= */
+  
+  body {
     background: var(--soft-white);
     font-family: "Open Sans";
-}
-h1, h2, h3, button {
+  }
+  
+  h1, h2, h3, button {
     font-family: "Montserrat";
     font-weight: bold;
-}
-label {
+  }
+  
+  label {
     font-family: "Montserrat";
     font-weight: 600;
-}
-input {
+  }
+  
+  input {
     font-family: "Open Sans";
-}
-
-/* Large devices */
-@media (min-width: 1000px) {
-    h1 {
-        font-size: 32px;
-    }
-    h2 {
-        font-size: 22px;
-    }
-    button{
-        font-size: 18px;
-    }
+  }
+  
+  /* Large devices */
+  @media (min-width: 767px) {
+    h1 { font-size: 32px; }
+    h2 { font-size: 22px; }
+    button { font-size: 18px; }
     .back-label {
-        font-size: 16px;
-        font-family: "Montserrat";
-        font-weight: 600;
+      font-size: 16px;
+      font-family: "Montserrat";
+      font-weight: 600;
     }
-}
-
-/* Small devices */
-@media (max-width: 1000px) {
+  }
+  
+  /* Small devices */
+  @media (max-width: 768px) {
     h1 {
-        font-size: 18px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
-    h2 {
-        font-size: 14px;
-    }
-    button {
-        font-size: 12px;
-    }
-}
-
-/* house-listings */
-
-.houses-list {
+    h2 { font-size: 14px; }
+    button { font-size: 12px; }
+  }
+  
+  /* =========================
+     House listings (cards)
+     ========================= */
+  
+  .houses-list {
     margin: 2rem auto;
     padding-inline: 1rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-}
-.house-card {
+  }
+  
+  .house-card {
     display: flex;
     align-items: stretch;
     background: var(--white);
     border-radius: 18px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 20px var(--grey);
     padding: 1.25rem 1.5rem;
     width: 70%;
     margin-inline: auto;
-}
-/* Small devices */
-@media (max-width: 1000px) {
+  }
+  
+  /* Small devices */
+  @media (max-width: 768px) {
     .house-card {
-        width: 100%;
+      width: 100%;
     }
-}
-.house-card-image {
+  }
+  
+  .house-card-image {
     width: 180px;
     height: 180px;
     border-radius: 12px;
     object-fit: cover;
     flex-shrink: 0;
     margin-right: 1.75rem;
-}
-.house-card-info {
+  }
+  
+  .house-card-info {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     justify-content: center;
-}
-.house-card-info p {
+  }
+  
+  .house-card-info p {
     color: var(--dark-grey);
-}
-.house-card-title {
+  }
+  
+  .house-card-title {
     font-size: 1.25rem;
     margin-bottom: 0.25rem;
-}
-.house-card-price {
+  }
+  
+  .house-card-price {
     font-weight: 600;
     margin-bottom: 0.25rem;
-}
-.house-card-address {
+  }
+  
+  .house-card-address {
     margin-bottom: 0.75rem;
-}
-.house-card-meta {
+  }
+  
+  .house-card-meta {
     display: flex;
     align-items: center;
     gap: 1.25rem;
     font-size: 0.9rem;
-}
-.meta-item {
+  }
+  
+  .meta-item {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-}
-.meta-item img {
+  }
+  .meta-item img {
     width: 18px;
     height: 18px;
-}
-.house-card:hover {
+  }
+  
+  .house-card:hover {
     cursor: pointer;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 12px 30px var(--grey);
     transform: translateY(-1px);
     transition: box-shadow 0.15s ease, transform 0.15s ease;
-}
+  }
+  
+  /* =========================
+     Houses page / header / controls
+     ========================= */
+  
+  .houses-page {
+    margin: 2rem auto;
+    padding-inline: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  /* top row: title + create button */
+  .houses-header {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+    width: 70%;
+    margin-inline: auto;
+  }
+  
+  .houses-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0;
+  }
+  
+  /* =========================
+     Buttons – base and create button
+     ========================= */
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+  }
+  
+  /* primary button */
+  .btn-primary {
+    background-color: var(--red);
+    color: var(--white);
+    border-radius: 8px;
+    padding: 0.6rem 1.5rem;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 600;
+    height: 46px;
+  }
+  
+  /* create button icon & label */
+  .btn-create-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
+  }
+  
+  /* there was a .create-button img rule and a .btn-create img rule in original —
+     keep .create-button img as provided */
+  .create-button img {
+    display: none;
+  }
+  
+  .btn-create-label {
+    white-space: nowrap;
+  }
+  
+  /* =========================
+     Search + toggle row
+     ========================= */
+  
+  .houses-controls {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+    width: 70%;
+    margin-inline: auto;
+  }
+  
+  /* search bar */
+  .search-bar {
+    position: relative;
+    flex: 1;
+    max-width: 500px;
+  }
+  
+  .search-bar-input {
+    width: 100%;
+    height: 46px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--light-grey);
+    color: var(--dark-grey);
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .search-bar-input::placeholder {
+    color: var(--grey);
+  }
+  
+  /* ICON BUTTON (left) */
+  .search-bar-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: default;
+  }
+  .search-bar-icon img {
+    width: 18px;
+  }
+  
+  /* CLEAR BUTTON (right) */
+  .search-bar-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+  }
+  .search-bar-clear img {
+    width: 18px;
+  }
+  
+  /* =========================
+     Responsive adjustments (general)
+     ========================= */
+  
+  @media (min-width: 767px) {
+    .btn-create img {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .search-bar {
+      max-width: none;
+    }
+  
+    .search-bar-input {
+      height: 44px;
+      font-size: 15px;
+    }
+  
+    .houses-page {
+      width: 100%;
+    }
+  }
+  
+  /* =========================
+     Sort toggle (price / size)
+     ========================= */
+  
+  .sort-toggle {
+    display: inline-flex;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--grey);
+  }
+  
+  .sort-toggle-btn {
+    padding: 0.6rem 1.8rem;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    height: 46px;
+  }
+  
+  .sort-toggle-btn--active {
+    background-color: var(--red);
+  }
+  
+  /* =========================
+     Results / mobile layout tweaks
+     ========================= */
+  
+  .search-result {
+    font-size: 0.9rem;
+    color: var(--dark-grey);
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+    width: 70%;
+    margin-inline: auto;
+  }
+  
+  /* mobile layout specifics */
+  @media (max-width: 768px) {
+    .houses-page {
+      padding: 1.25rem 1rem 2rem;
+    }
+  
+    .houses-header {
+      justify-content: space-between;
+    }
+  
+    .houses-title {
+      font-size: 1.6rem;
+      text-align: center;
+      flex: 1;
+    }
+  
+    /* create button: icon only on small screens */
+    .btn-create-label {
+      display: none;
+    }
+  
+    .btn-primary.btn-create {
+      padding: 0.4rem 0.6rem;
+      border-radius: 50%;
+      background-color: var(--soft-white);
+    }
+  
+    .houses-controls {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+  
+    .sort-toggle {
+      width: 100%;
+    }
+  
+    .sort-toggle-btn {
+      flex: 1;
+      text-align: center;
+      padding-inline: 0;
+    }
+  }
+  
