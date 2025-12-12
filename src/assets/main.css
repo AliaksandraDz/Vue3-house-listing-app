@@ -548,3 +548,29 @@
     }
   }
   
+/* house details */
+
+.house-details {
+  display: flex;
+}
+
+.main-house-card {
+  border: solid 1px black;
+  flex: 70%
+}
+
+.recommended-houses {
+  border: solid 1px black;
+  flex: 30%
+}
+
+/* move recommended houses under the house details on small devices */
+
+@media (max-width: 768px) {
+  .house-details{
+    flex-direction: column;
+  }
+  .main-house-card, .recommended-houses {
+    flex: 100%
+  }
+}
