@@ -22,6 +22,8 @@ export const useStore = defineStore('store', {
       }
 
       this.houses = await res.json();
+
+      // for post add "madeByMe": true
     },
 
     toggleActive(buttonType) {

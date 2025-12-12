@@ -7,6 +7,16 @@
           :src="houseDetails.image"
           alt="House"
         />
+
+        <!-- to delete and edit only my houses, two options
+            <button v-if="houseDetails.madeByMe">Edit</button>
+        <button v-if="houseDetails.madeByMe">Delete</button>
+
+        <div v-if="houseDetails?.madeByMe" class="owner-actions">
+            <button class="btn-edit">Edit</button>
+            <button class="btn-delete">Delete</button>
+        </div> -->
+
         <div class="house-card-info">
           <h3 class="house-card-title">
             {{ houseDetails.location.street }} {{ houseDetails.location.houseNumber }}
