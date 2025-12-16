@@ -70,13 +70,13 @@
     <!-- list of houses -->
   </section>
   <div v-for="house in store.filteredHouses" :key="house.id" class="houses-list">
-    <HouseListing :house="house" />
+    <HouseListingComponent :house="house" />
   </div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue';
-import HouseListing from '@/components/HouseListing.vue'
+import HouseListingComponent from '@/components/HouseListingComponent.vue'
 import { useStore } from '@/stores/store'
 
 const store = useStore();

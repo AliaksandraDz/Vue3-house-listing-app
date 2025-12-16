@@ -1,11 +1,11 @@
 <template>
-  <router-link :to="{ name: 'HouseDetails', params: { id: house.id }}">
+  <router-link :to="{ name: 'HouseDetailsView', params: { id: house.id }}">
     <article class="house-card">
       <img class="house-card-image" :src="house.image" alt="House"/>
       <div class="house-card-info">
         <h3 class="house-card-title">{{ house.location.street }} {{ house.location.houseNumber }}</h3>
-        <p class="house-card-price">€ {{ house.price }}</p>
         <p class="house-card-address">{{ house.location.zip }} {{ house.location.city }}</p>
+        <p class="house-card-price">€ {{ house.price }}</p>
         <p class="house-card-meta">
           <span class="meta-item">
             <img src="../assets/ic_bed@3x.png" alt="Bed" />{{ house.rooms.bedrooms }}
@@ -22,8 +22,14 @@
   </router-link>
 </template>
 
-<script setup>
-  defineProps({
-    house: Object
-  });
+<script>
+export default {
+  name: 'HouseListingComponent',
+  props: {
+    house: {
+      type: Object,
+      required: true,
+    },
+  },
+}
 </script>

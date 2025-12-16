@@ -11,7 +11,7 @@ export const useStore = defineStore('store', {
 
   actions: {
     async getHouses() {
-      const res = await fetch(baseUrl, {
+      const res = await fetch(`${baseUrl}`, {
         method: "GET",
         headers: { "X-Api-Key": apiKey },
       });
@@ -23,12 +23,27 @@ export const useStore = defineStore('store', {
 
       this.houses = await res.json();
 
-      // for post add "madeByMe": true
+    },
+
+    async getHouseById(id) {
+      const res = await fetch(`${baseUrl}/${id}`, {
+        method: "GET",
+        headers: { "X-Api-Key": apiKey },
+      });
+    
+      if (!res.ok) {
+        throw new Error(`Failed to fetch house ${id}`);
+      }
+    
+      const data = await res.json()
+      return data[0]  // always return a single object
     },
 
     toggleActive(buttonType) {
       this.isActive = buttonType;
     },
+
+    // for post add "madeByMe": true
 
     clearSearch() {
       this.searchInput = '';
