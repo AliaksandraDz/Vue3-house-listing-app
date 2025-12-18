@@ -1,5 +1,5 @@
 <template>
-    <section class="houses-page">
+    <section class="houses-page main">
     <!-- Top row: title + create button -->
     <div class="houses-header">
       <h1 class="houses-title">Houses</h1>

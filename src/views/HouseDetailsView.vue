@@ -1,5 +1,6 @@
 <template>
-    <div class="house-details">
+
+    <div class="house-details main">
     <!-- Loader -->
     <div v-if="isLoading" class="main-house-card --loading">
       Loading house...
@@ -12,6 +13,18 @@
 
     <!-- Only render when data exists -->
     <article v-else class="main-house-card">
+
+    <router-link to="/" class="btn btn-back">
+      <picture>
+          <!-- Small devices -->
+          <source srcset="../assets/ic_back_white@3x.png" media="(max-width: 768px)">
+          <!-- Large devices -->
+          <source srcset="../assets/ic_back_grey@3x.png">
+          <img class="btn-back-icon" src="../assets/ic_back_grey@3x.png" alt="Back">
+      </picture> 
+      <span class="btn-back-label">Back to overview</span>
+    </router-link>
+
       <img
         class="main-house-card-image"
         :src="houseDetails?.image"
@@ -32,9 +45,28 @@
           {{ houseDetails?.location?.street }} {{ houseDetails?.location?.houseNumber }}
         </h3>
 
-        <p class="main-house-card-price">€ {{ houseDetails.price }}</p>
-        <p class="main-house-card-address">
-          {{ houseDetails?.location?.zip }} {{ houseDetails?.location?.city }}
+        <p class="main-house-card-meta">
+          <span class="meta-item">
+            <img src="../assets/ic_location@3x.png" alt="Location" />
+            {{ houseDetails?.location?.zip }} {{ houseDetails?.location?.city }}
+          </span>
+        </p>
+
+        <p class="main-house-card-meta">
+          <span class="meta-item">
+            <img src="../assets/ic_price@3x.png" alt="Price" />
+            {{ houseDetails?.price }}
+          </span>
+
+          <span class="meta-item">
+            <img src="../assets/ic_size@3x.png" alt="Size" />
+            {{ houseDetails?.size }} m2
+          </span>
+
+          <span class="meta-item">
+            <img src="../assets/ic_construction_date@3x.png" alt="Construction Year" />
+            {{ houseDetails?.constructionYear }}
+          </span>
         </p>
 
         <p class="main-house-card-meta">

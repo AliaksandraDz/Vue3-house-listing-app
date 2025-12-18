@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 export function useActivePage() {
   const route = useRoute();
 
-  const isHome = computed(() => route?.name === 'home'|| route.name === 'HouseDetails');
+  const isHome = computed(() => route?.name === 'home'|| route.name === 'HouseDetails' || route.name === 'HouseDetailsView');
   const isAbout = computed(() => route?.name === 'about');
 
   return {

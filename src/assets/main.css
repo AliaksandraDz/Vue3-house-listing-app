@@ -74,6 +74,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 40px;
   }
   
   .nav-header {
@@ -183,7 +184,9 @@
   input {
     font-family: "Open Sans";
   }
-  
+  .main {
+    padding: 0 0 100px 0;
+  }
   /* Large devices */
   @media (min-width: 767px) {
     h1 { font-size: 32px; }
@@ -357,8 +360,6 @@
     margin-right: 0.5rem;
   }
   
-  /* there was a .create-button img rule and a .btn-create img rule in original —
-     keep .create-button img as provided */
   .create-button img {
     display: none;
   }
@@ -552,30 +553,27 @@
 
 .house-details {
   display: flex;
-  gap: 100px;
   justify-content: center;
-  padding: 20px 200px;
   box-sizing: border-box;
 }
 
 .main-house-card {
-  border: solid 1px black;
   flex: 0 1 50%;
-  max-width: 600px;
   box-sizing: border-box;
 }
 
 .recommended-houses {
   border: solid 1px black;
   flex: 0 1 20%;
-  max-width: 300px;
   box-sizing: border-box;
+  margin-top: 43px;
 }
 
 .main-house-card-image {
   object-fit: cover;
   flex-shrink: 0;
   margin-right: 1.75rem;
+  z-index: -1;
 }
 
 .main-house-card-info {
@@ -584,6 +582,11 @@
   gap: 0.5rem;
   justify-content: center;
   padding: 20px;
+  background-color: var(--white);
+}
+
+.btn-back-icon {
+  height:20px;
 }
 
 .main-house-card-info p {
@@ -610,14 +613,47 @@
   gap: 1.25rem;
   font-size: 0.9rem;
 }
+.btn-back {
+  background-color: transparent;
+  padding: 10px 0;
+}
 
-/* move recommended houses under the house details on small devices */
+@media (min-width: 769px) {
+  .house-details {
+    gap: 100px;
+  }
+}
+
+/* move recommended houses under the house details on small devices; style for small devices */
 
 @media (max-width: 768px) {
   .house-details{
     flex-direction: column;
   }
   .main-house-card, .recommended-houses {
-    flex: 100%
+    flex: 100%;
+    position: relative; 
+  }
+  .recommended-houses {
+    flex: 100%;
+  }
+  .main-house-card-info {
+    border-radius: 40px 40px 0px 0px;
+    margin-top: -40px;
+    position: relative;
+  }
+  .recommended-houses {
+    margin-top: 30px;
+  }
+  .btn-back-label {
+    display: none;
+  }
+  .btn-back {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+    border-radius: 50%;
+    padding: 8px;
   }
 }
