@@ -25,6 +25,19 @@
       <span class="btn-back-label">Back to overview</span>
     </router-link>
 
+    <!-- Small devices -->
+    <div class="house-actions-sm">
+      <router-link
+        :to="{ name: 'HouseEditView', params: { id: $route.params.id }}"
+        class="btn btn-edit">
+          <img class="btn-edit-icon" src="../assets/ic_edit_white@3x.png" alt="Edit" />
+      </router-link>
+
+      <button class="btn btn-delete" @click="showModal = true">
+          <img class="btn-delete-icon" src="../assets/ic_delete_white@3x.png" alt="Delete" />
+      </button>
+    </div>
+
       <img
         class="main-house-card-image"
         :src="houseDetails?.image"
@@ -41,9 +54,24 @@
       </div> -->
 
       <div class="main-house-card-info">
-        <h3 class="main-house-card-title">
-          {{ houseDetails?.location?.street }} {{ houseDetails?.location?.houseNumber }}
-        </h3>
+        <div class="main-house-card-header">
+          <h3 class="main-house-card-title">
+            {{ houseDetails?.location?.street }} {{ houseDetails?.location?.houseNumber }}
+          </h3>
+
+          <!-- Large devices -->
+          <div class="house-actions">
+            <router-link
+              :to="{ name: 'HouseEditView', params: { id: $route.params.id }}"
+              class="btn btn-edit">
+                <img class="btn-edit-icon" src="../assets/ic_edit@3x.png" alt="Edit" />
+            </router-link>
+
+            <button class="btn btn-delete" @click="showModal = true">
+                <img class="btn-delete-icon" src="../assets/ic_delete@3x.png" alt="Delete" />
+            </button>
+          </div>
+      </div>
 
         <p class="main-house-card-meta">
           <span class="meta-item">
