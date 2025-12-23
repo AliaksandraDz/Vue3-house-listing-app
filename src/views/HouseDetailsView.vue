@@ -122,6 +122,7 @@
     </article>
 
     <div class="recommended-houses">Im Recommended!</div>
+    <ModalComponent v-if="showModal" :house="houseDetails" @close="showModal = false"/>
   </div>
 </template>
 
@@ -129,12 +130,14 @@
 import { ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from '@/stores/store'
+import ModalComponent from '@/components/ModalComponent.vue'
 
 const route = useRoute()
 const store = useStore()
 
 const houseDetails = ref(null)
-const isLoading = ref(true) // start as true
+const isLoading = ref(true)
+const showModal = ref(route.query.delete === "true");
 
 watchEffect(async () => {
   const idParam = route.params.id

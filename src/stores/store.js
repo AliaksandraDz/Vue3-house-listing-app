@@ -39,6 +39,19 @@ export const useStore = defineStore('store', {
       return data[0]  // always return a single object
     },
 
+    async deleteHouse(id) {
+      const res = await fetch(`${baseUrl}/${id}`, {
+        method: "DELETE",
+        headers: {
+          "X-Api-Key": apiKey
+        },
+      });
+          
+      if (!res.ok) {
+        throw new Error(`Failed to delete house ${id}`);
+      }
+    },
+
     toggleActive(buttonType) {
       this.isActive = buttonType;
     },
