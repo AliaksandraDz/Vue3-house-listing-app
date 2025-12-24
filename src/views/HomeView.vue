@@ -4,7 +4,7 @@
     <div class="houses-header">
       <h1 class="houses-title">Houses</h1>
 
-      <!-- <router-link :to="{ name: 'HouseCreateMain' }" class="create-link"> -->
+      <router-link :to="{ name: 'HouseCreateView' }" class="create-link">
         <button class="btn btn-primary btn-create">
           <img
             src="../assets/ic_plus_grey@3x.png"
@@ -13,7 +13,7 @@
           />
           <span class="btn-create-label">+ Create new</span>
         </button>
-      <!-- </router-link> -->
+      </router-link>
       </div>
 
     <!-- Search + sort controls -->

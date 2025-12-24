@@ -56,7 +56,46 @@ export const useStore = defineStore('store', {
       this.isActive = buttonType;
     },
 
-    // for post add "madeByMe": true
+    async addHouse(houseFormData, imageFormData) {
+
+      const res = await fetch(baseUrl, {
+        method: 'POST',
+        headers: {
+          'X-Api-Key': apiKey,
+        },
+        body: houseFormData,
+      })
+    
+      if (!res.ok) {
+        throw new Error('Failed to create house')
+      }
+    
+      const createdHouse = await res.json()
+    
+      const imageRes = await fetch(
+        `${baseUrl}/${createdHouse.id}/upload`,
+        {
+          method: 'POST',
+          headers: {
+            'X-Api-Key': apiKey,
+          },
+          body: imageFormData,
+        }
+      )
+    
+      if (!imageRes.ok) {
+        throw new Error('Failed to upload image')
+      }
+
+      const houseWithOwnership = {
+        ...createdHouse,
+        madeByMe: true,
+      }
+    
+      this.houses.push(houseWithOwnership)
+    
+      return houseWithOwnership
+    },
 
     clearSearch() {
       this.searchInput = '';
