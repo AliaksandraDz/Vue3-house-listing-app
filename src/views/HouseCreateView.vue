@@ -1,13 +1,11 @@
-<template>
+<template id="main">
     <div class="house-create">
-      <div class="house-create-wrapper">
-        <router-link to="/">
-          <button class="back-button">
-            <img src="../assets/ic_back_grey@3x.png" alt="Back" />
-          </button>
+        <div class="house-create-wrapper">
+            <router-link to="/" class="btn btn-edit-back">
+            <img class="btn-edit-back-icon" src="../assets/ic_back_grey@3x.png" alt="Back" />
+            <p class="back-label">Back to overview</p>
         </router-link>
-  
-        <p class="back-label">Back to overview</p>
+
         <h1>Create new listing</h1>
   
         <form @submit.prevent="handleSubmit">
@@ -77,7 +75,7 @@
           <!-- IMAGE -->
           <div class="full-size">
             <label>Upload picture (PNG or JPG)*</label>
-            <div class="input-wrapper" ref="imageWrapper">
+            <div class="input-wrapper" :class="{ 'has-image': image }" ref="imageWrapper">
               <input
                 type="file"
                 accept="image/png, image/jpeg"
@@ -131,12 +129,20 @@
           <!-- ROOMS -->
           <div class="half-size">
             <label>Bedrooms*</label>
-            <input type="number" required min="1" v-model="form.rooms.bedrooms" />
+            <input type="number" 
+                required min="1" 
+                v-model="form.rooms.bedrooms"
+                placeholder="Enter amount" 
+            />
           </div>
   
           <div class="half-size">
             <label>Bathrooms*</label>
-            <input type="number" required min="1" v-model="form.rooms.bathrooms" />
+            <input type="number" 
+                required min="1" 
+                v-model="form.rooms.bathrooms" 
+                placeholder="Enter amount"
+            />
           </div>
   
           <!-- YEAR -->
@@ -148,6 +154,7 @@
               min="1700"
               :max="currentYear"
               v-model="form.constructionYear"
+              placeholder="e.g. 1990"
             />
           </div>
   
@@ -159,6 +166,7 @@
               minlength="5"
               rows="4"
               v-model="form.description"
+              placeholder="Enter description"
             />
           </div>
   
@@ -168,9 +176,9 @@
             </button>
           </div>
         </form>
-      </div>
+        </div>
     </div>
-  </template>
+</template>
 
 <script>
 import { ref, onBeforeMount, onUnmounted } from 'vue'
