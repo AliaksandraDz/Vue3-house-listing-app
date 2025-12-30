@@ -18,7 +18,7 @@
           </span>
         </p>
       </div>
-      <div class="house-card-actions">
+      <div class="house-card-actions" v-if="house.madeByMe">
         <router-link
           :to="{ name: 'HouseEditView', params: { id: house.id }}"
           class="btn btn-edit">

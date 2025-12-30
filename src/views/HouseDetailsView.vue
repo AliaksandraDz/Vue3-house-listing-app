@@ -26,7 +26,7 @@
     </router-link>
 
     <!-- Small devices -->
-    <div class="house-actions-sm">
+    <div class="house-actions-sm" v-if="houseDetails?.madeByMe">
       <router-link
         :to="{ name: 'HouseEditView', params: { id: $route.params.id }}"
         class="btn btn-edit">
@@ -60,7 +60,7 @@
           </h3>
 
           <!-- Large devices -->
-          <div class="house-actions">
+          <div class="house-actions" v-if="houseDetails?.madeByMe">
             <router-link
               :to="{ name: 'HouseEditView', params: { id: $route.params.id }}"
               class="btn btn-edit">
@@ -93,7 +93,7 @@
 
           <span class="meta-item">
             <img src="../assets/ic_construction_date@3x.png" alt="Construction Year" />
-            {{ houseDetails?.constructionYear }}
+            Built in {{ houseDetails?.constructionYear }}
           </span>
         </p>
 
@@ -109,8 +109,8 @@
           </span>
 
           <span class="meta-item">
-            <img src="../assets/ic_size@3x.png" alt="Size" />
-            {{ houseDetails?.size }} m2
+            <img src="../assets/ic_garage@3x.png" alt="Garage" />
+            {{ houseDetails?.hasGarage ? 'Yes' : 'No' }}
           </span>
         </p>
         

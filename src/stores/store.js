@@ -97,6 +97,43 @@ export const useStore = defineStore('store', {
       return houseWithOwnership
     },
 
+    async editHouse(houseFormData, imageFormData, id) {
+      const res = await fetch(`${baseUrl}/${id}`, {
+        method: 'POST',
+        headers: {
+          'X-Api-Key': apiKey,
+        },
+        body: houseFormData,
+      })
+    
+      if (!res.ok) {
+        throw new Error(`Failed to update house ${id}`)
+      }
+    
+      if (imageFormData) {
+        const imageRes = await fetch(`${baseUrl}/${id}/upload`, {
+          method: 'POST',
+          headers: {
+            'X-Api-Key': apiKey,
+          },
+          body: imageFormData,
+        })
+    
+        if (!imageRes.ok) {
+          throw new Error('Failed to upload image')
+        }
+      }
+
+      const index = this.houses.findIndex(h => h.id === id)
+      if (index !== -1) {
+        this.houses[index] = {
+          ...this.houses[index],
+          ...Object.fromEntries(houseFormData),
+        }
+      }
+    },
+    
+
     clearSearch() {
       this.searchInput = '';
     },

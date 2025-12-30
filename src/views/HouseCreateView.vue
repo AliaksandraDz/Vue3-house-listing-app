@@ -1,4 +1,4 @@
-<template id="main">
+<template>
     <div class="house-create">
         <div class="house-create-wrapper">
             <router-link to="/" class="btn btn-edit-back">
@@ -181,7 +181,7 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, onUnmounted } from 'vue'
+import { ref } from 'vue'
 import { useStore } from '@/stores/store'
 import { useRouter } from 'vue-router'
 
@@ -267,14 +267,6 @@ export default {
         isSubmitting.value = false
       }
     }
-
-    onBeforeMount(() => {
-      document.getElementById('main')?.classList.add('background-wrapper')
-    })
-
-    onUnmounted(() => {
-      document.getElementById('main')?.classList.remove('background-wrapper')
-    })
 
     return {
       form,
