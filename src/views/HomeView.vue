@@ -63,9 +63,15 @@
     </div>
 
     <!-- results counter -->
-    <p v-if="store.searchInput.length > 0" class="search-result">
+    <p v-if="store.searchInput.length > 0 && store.filteredHouses.length > 0" 
+      class="search-result">
       {{ store.filteredHouses.length }} results found
     </p>
+    <div v-show="store.filteredHouses.length === 0" class="no-results">
+      <img src="../assets/img_empty_houses@3x.png" alt="No results" />
+      <p class="no-results-text">No results found.</p>
+      <p>Please try another keyword.</p>
+    </div>
 
     <!-- list of houses -->
   </section>

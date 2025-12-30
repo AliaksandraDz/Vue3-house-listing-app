@@ -179,9 +179,6 @@
   input {
     font-family: "Open Sans";
   }
-  .main {
-    padding: 0 0 100px 0;
-  }
   /* Large devices */
   @media (min-width: 767px) {
     h1 { font-size: 32px; }
@@ -212,11 +209,11 @@
      ========================= */
   
   .houses-list {
-    margin: 2rem auto;
-    padding-inline: 1rem;
+    margin: 32px auto;
+    padding-inline: 16px;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.5px;
   }
   
   .house-card {
@@ -225,7 +222,7 @@
     background: var(--white);
     border-radius: 18px;
     box-shadow: 0 8px 20px var(--grey);
-    padding: 1.25rem 1.5rem;
+    padding: 20px 24px;
     width: 70%;
     margin-inline: auto;
   }
@@ -252,13 +249,13 @@
     border-radius: 12px;
     object-fit: cover;
     flex-shrink: 0;
-    margin-right: 1.75rem;
+    margin-right: 28px;
   }
   
   .house-card-info {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 8px;
     justify-content: center;
     width: 100%
   }
@@ -268,8 +265,8 @@
   }
   
   .house-card-title {
-    font-size: 1.25rem;
-    margin-bottom: 0.25rem;
+    font-size: 20px;
+    margin-bottom: 4px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -277,24 +274,24 @@
   
   .house-card-price {
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    margin-bottom: 4px;
   }
   
   .house-card-address {
-    margin-bottom: 0.75rem;
+    margin-bottom: 12px;
   }
   
   .house-card-meta {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    font-size: 0.9rem;
+    gap: 20px;
+    font-size: 14.4px;
   }
   
   .meta-item {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 6.4px;
   }
   .meta-item img {
     width: 18px;
@@ -308,16 +305,36 @@
     transition: box-shadow 0.15s ease, transform 0.15s ease;
   }
   
+  /* not found */
+  .no-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+  }
+  .no-results img {
+    width: 220px;
+    height: 110px;
+  }
+  .no-results p {
+    font-size: 12px;
+    font-family: "Montserrat";
+    font-weight: 500; /*medium*/ 
+  }
+  .no-results-text {
+    padding-top: 25px;
+  }
+
   /* =========================
      Houses page / header / controls
      ========================= */
   
   .houses-page {
-    margin: 2rem auto;
-    padding-inline: 1rem;
+    margin: 32px auto;
+    padding-inline: 16px;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
   }
   
   /* top row: title + create button */
@@ -325,13 +342,13 @@
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-    margin-bottom: 1.75rem;
+    margin-bottom: 28px;
     width: 70%;
     margin-inline: auto;
   }
   
   .houses-title {
-    font-size: 2.2rem;
+    font-size: 35.2px;
     font-weight: 700;
     margin: 0;
   }
@@ -354,9 +371,9 @@
     background-color: var(--red);
     color: var(--white);
     border-radius: 8px;
-    padding: 0.6rem 1.5rem;
+    padding: 9.6px 24px;
     text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: 14.4px;
     font-weight: 600;
     height: 46px;
   }
@@ -365,7 +382,7 @@
   .btn-create-icon {
     width: 16px;
     height: 16px;
-    margin-right: 0.5rem;
+    margin-right: 8px;
   }
   
   .create-button img {
@@ -384,7 +401,7 @@
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-    margin-bottom: 1.75rem;
+    margin-bottom: 28px;
     width: 70%;
     margin-inline: auto;
   }
@@ -485,11 +502,11 @@
   }
   
   .sort-toggle-btn {
-    padding: 0.6rem 1.8rem;
+    padding: 9.6px 28.8px;
     border: none;
     background: transparent;
     color: #fff;
-    font-size: 0.95rem;
+    font-size: 15.2px;
     font-weight: 500;
     height: 46px;
   }
@@ -503,29 +520,25 @@
      ========================= */
   
   .search-result {
-    font-size: 0.9rem;
+    font-size: 14.4px;
     color: var(--dark-grey);
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-    margin-bottom: 1.75rem;
+    margin-bottom: 28px;
     width: 70%;
     margin-inline: auto;
   }
   
   /* mobile layout specifics */
   @media (max-width: 768px) {
-    .houses-page {
-      padding: 1.25rem 1rem 2rem;
-    }
-  
     .houses-header {
       justify-content: space-between;
       width: 100%
     }
   
     .houses-title {
-      font-size: 1.6rem;
+      font-size: 25.6px;
       text-align: center;
       flex: 1;
     }
@@ -536,7 +549,7 @@
     }
   
     .btn-primary.btn-create {
-      padding: 0.4rem 0.6rem;
+      padding: 6.4px 9.6px;
       border-radius: 50%;
       background-color: var(--soft-white);
     }
@@ -544,7 +557,7 @@
     .houses-controls {
       flex-direction: column;
       align-items: stretch;
-      gap: 0.75rem;
+      gap: 12px;
       width: 100%
     }
   
@@ -582,7 +595,7 @@
 .main-house-card-image {
   object-fit: cover;
   flex-shrink: 0;
-  margin-right: 1.75rem;
+  margin-right: 28px;
   z-index: -1;
   width: 100%;
 }
@@ -590,7 +603,7 @@
 .main-house-card-info {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
   justify-content: center;
   padding: 20px;
   background-color: var(--white);
@@ -605,24 +618,24 @@
 }
 
 .main-house-card-title {
-  font-size: 1.25rem;
-  margin-bottom: 0.25rem;
+  font-size: 20px;
+  margin-bottom: 4px;
 }
 
 .main-house-card-price {
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  margin-bottom: 4px;
 }
 
 .main-house-card-address {
-  margin-bottom: 0.75rem;
+  margin-bottom: 12px;
 }
 
 .main-house-card-meta {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
-  font-size: 0.9rem;
+  gap: 20px;
+  font-size: 14.4px;
 }
 .btn-back {
   background-color: transparent;
@@ -808,11 +821,11 @@
 /* Large devices */
 @media (min-width: 769px) {
   .house-create {
-    padding: 0rem 0rem 1rem 18rem;
+    padding: 0px 0px 16px 228px;
   }
   .house-create-wrapper {
     max-width: 500px;
-    padding: 3rem 1rem 6rem;
+    padding: 48px 16px 96px;
   }
   .create-header-sm {
     display: none
@@ -846,31 +859,32 @@ input[type=file] {
 }
 .input-wrapper.has-image {
   border-style: none;
+  border-radius: 10px;
 }
 .full-size input[type=text], .full-size input[type=number], textarea{
   display: block;
   width: 100%;
   border-radius: 7px;
-  background-color: #FFFFFF;
+  background-color: var(--white);
   border: none;
-  color: #4A4B4C;
+  color: var(--dark-grey);
   outline: none;
   padding: 12px 0 12px 20px;
 }
 .half-size select{
   width: 100%;
   border-radius: 7px;
-  background-color: #FFFFFF;
+  background-color: var(--white);
   border: none;
-  color: #4A4B4C;
+  color: var(--dark-grey);
   outline: none;
   padding: 12px 20px;
 }
 .half-size input[type=text], .half-size input[type=number] {
   border-radius: 7px;
-  background-color: #FFFFFF;
+  background-color: var(--white);
   border: none;
-  color: #4A4B4C;
+  color: var(--dark-grey);
   outline: none;
   padding: 12px 0 12px 20px;
   width: 100%;

@@ -278,11 +278,7 @@ export default {
       hasNewImage.value = false
       originalImageUrl.value = null
       imageRemoved.value = true
-
-    // if (imageWrapper.value && originalImageUrl.value) {
-    //   imageWrapper.value.style.backgroundImage =
-    //    `url(${originalImageUrl.value})`
-    //   }
+      
       if (imageWrapper.value) {
       imageWrapper.value.style.backgroundImage = ''
       }
