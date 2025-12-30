@@ -80,15 +80,17 @@
         <!-- IMAGE -->
         <div class="full-size">
           <label>Upload picture (PNG or JPG)*</label>
-          <div class="input-wrapper" :class="{ 'has-image': image || originalImageUrl }"
- ref="imageWrapper">
+          <div class="input-wrapper" 
+          :class="{ 'has-image': image || originalImageUrl }"
+          ref="imageWrapper"
+          >
             <input
               type="file"
               accept="image/png, image/jpeg"
               @change="handleImageChange"
             />
             <button
-              v-if="hasNewImage || originalImageUrl"
+              v-if="image || originalImageUrl"
               class="clear-button-white"
               @click.prevent="clearImage"
             >
@@ -221,6 +223,7 @@ export default {
     const imageWrapper = ref(null)
     const originalImageUrl = ref(null)
     const hasNewImage = ref(false)
+    const imageRemoved = ref(false)
     const isSubmitting = ref(false)
     const currentYear = new Date().getFullYear()
 
@@ -270,14 +273,18 @@ export default {
     }
   }
 
-
     const clearImage = () => {
       image.value = null
       hasNewImage.value = false
+      originalImageUrl.value = null
+      imageRemoved.value = true
 
-    if (imageWrapper.value && originalImageUrl.value) {
-      imageWrapper.value.style.backgroundImage =
-       `url(${originalImageUrl.value})`
+    // if (imageWrapper.value && originalImageUrl.value) {
+    //   imageWrapper.value.style.backgroundImage =
+    //    `url(${originalImageUrl.value})`
+    //   }
+      if (imageWrapper.value) {
+      imageWrapper.value.style.backgroundImage = ''
       }
     }
 
@@ -317,14 +324,6 @@ export default {
         isSubmitting.value = false
       }
     }
-
-    // onBeforeMount(() => {
-    //   document.getElementById('main')?.classList.add('background-wrapper')
-    // })
-
-    // onUnmounted(() => {
-    //   document.getElementById('main')?.classList.remove('background-wrapper')
-    // })
 
     return {
       form,
