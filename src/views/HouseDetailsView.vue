@@ -44,15 +44,6 @@
         alt="House"
       />
 
-      <!-- to delete and edit only my houses, two options
-          <button v-if="houseDetails.madeByMe">Edit</button>
-      <button v-if="houseDetails.madeByMe">Delete</button>
-
-      <div v-if="houseDetails?.madeByMe" class="owner-actions">
-          <button class="btn-edit">Edit</button>
-          <button class="btn-delete">Delete</button>
-      </div> -->
-
       <div class="main-house-card-info">
         <div class="main-house-card-header">
           <h3 class="main-house-card-title">

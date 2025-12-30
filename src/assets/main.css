@@ -229,19 +229,26 @@
     width: 70%;
     margin-inline: auto;
   }
-  .house-card-actions {
-    margin: 24px 40px;
-  }
   /* Small devices */
   @media (max-width: 768px) {
     .house-card {
       width: 100%;
     }
+    .house-card-image {
+      width: 140px;
+      height: 140px;
+    }
+  }
+
+  /* Large devices */
+  @media (min-width: 769px) {
+    .house-card-image {
+      width: 180px;
+      height: 180px;
+    }
   }
   
   .house-card-image {
-    width: 180px;
-    height: 180px;
     border-radius: 12px;
     object-fit: cover;
     flex-shrink: 0;
@@ -253,6 +260,7 @@
     flex-direction: column;
     gap: 0.5rem;
     justify-content: center;
+    width: 100%
   }
   
   .house-card-info p {
@@ -262,6 +270,9 @@
   .house-card-title {
     font-size: 1.25rem;
     margin-bottom: 0.25rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
   
   .house-card-price {
@@ -510,6 +521,7 @@
   
     .houses-header {
       justify-content: space-between;
+      width: 100%
     }
   
     .houses-title {
@@ -533,6 +545,7 @@
       flex-direction: column;
       align-items: stretch;
       gap: 0.75rem;
+      width: 100%
     }
   
     .sort-toggle {
@@ -633,7 +646,6 @@
   .house-actions {
     display: flex;
     gap: 8px;
-    /* border: 2px solid black; */
   }
 }
 
@@ -762,11 +774,7 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  padding: 60px;
-}
-.house-create-wrapper {
-  border: solid 1px black;
-  padding: 3rem 1rem 6rem;
+  padding: 20px;
 }
 .btn-edit-back-icon {
   height: 20px;
@@ -775,9 +783,26 @@
 @media (max-width: 768px) {
   .house-create-wrapper {
     width: 100%;
+    padding: 0
   }
   .back-label {
     display: none;
+  }
+  .create-header-lg {
+    display: none
+  }
+  .create-header-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  .create-header-sm {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    text-align: center;
   }
 }
 /* Large devices */
@@ -787,6 +812,10 @@
   }
   .house-create-wrapper {
     max-width: 500px;
+    padding: 3rem 1rem 6rem;
+  }
+  .create-header-sm {
+    display: none
   }
 }
 .background-wrapper {
@@ -869,14 +898,12 @@ form {
   display: grid;
   grid-template-columns: auto auto;
   gap: 10px;
-  padding: 10px;
-  margin-left: -30px;
 }
 .full-size {
   grid-column: 1 / span 2;
 }
 form > div {
-  padding: 12px 20px;
+  padding: 5px 0px;
 }
 .submit-form-button {
   border: none;

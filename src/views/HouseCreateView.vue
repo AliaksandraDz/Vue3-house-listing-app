@@ -1,12 +1,15 @@
 <template>
     <div class="house-create">
         <div class="house-create-wrapper">
+          <div class="create-header-row">
             <router-link to="/" class="btn btn-edit-back">
-            <img class="btn-edit-back-icon" src="../assets/ic_back_grey@3x.png" alt="Back" />
-            <p class="back-label">Back to overview</p>
-        </router-link>
+              <img class="btn-edit-back-icon" src="../assets/ic_back_grey@3x.png" alt="Back" />
+              <p class="back-label">Back to overview</p>
+            </router-link>
+            <h1 class="create-header-sm">Create new listing</h1>
+          </div>
 
-        <h1>Create new listing</h1>
+        <h1 class="create-header-lg">Create new listing</h1>
   
         <form @submit.prevent="handleSubmit">
           <!-- STREET -->

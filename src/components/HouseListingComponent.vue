@@ -3,7 +3,18 @@
     <article class="house-card">
       <img class="house-card-image" :src="house.image" alt="House"/>
       <div class="house-card-info">
-        <h3 class="house-card-title">{{ house.location.street }} {{ house.location.houseNumber }}</h3>
+        <h3 class="house-card-title">{{ house.location.street }} {{ house.location.houseNumber }}
+          <div class="house-card-actions" v-if="house.madeByMe">
+            <router-link
+              :to="{ name: 'HouseEditView', params: { id: house.id }}"
+              class="btn btn-edit">
+                <img class="btn-edit-icon" src="../assets/ic_edit@3x.png" alt="Edit" />
+            </router-link>
+            <button class="btn btn-delete" @click="clickedOnDelete = true">
+                <img class="btn-delete-icon" src="../assets/ic_delete@3x.png" alt="Delete" />
+            </button>
+          </div>
+        </h3>
         <p class="house-card-price">€ {{ house.price }}</p>
         <p class="house-card-address">{{ house.location.zip }} {{ house.location.city }}</p>
         <p class="house-card-meta">
@@ -18,7 +29,7 @@
           </span>
         </p>
       </div>
-      <div class="house-card-actions" v-if="house.madeByMe">
+      <!-- <div class="house-card-actions" v-if="house.madeByMe">
         <router-link
           :to="{ name: 'HouseEditView', params: { id: house.id }}"
           class="btn btn-edit">
@@ -27,7 +38,7 @@
         <button class="btn btn-delete" @click="clickedOnDelete = true">
             <img class="btn-delete-icon" src="../assets/ic_delete@3x.png" alt="Delete" />
         </button>
-      </div>
+      </div> -->
     </article>
   </router-link>
 </template>
