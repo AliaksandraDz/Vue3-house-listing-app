@@ -13,177 +13,272 @@
 
       <h1 class="create-header-lg">Edit listing</h1>
 
-      <form @submit.prevent="handleSubmit">
-        <!-- STREET -->
-        <div class="full-size">
-          <label>Street name*</label>
-          <input
-            type="text"
-            required
-            minlength="2"
-            maxlength="20"
-            v-model="form.location.street"
-            placeholder="Enter the street name"
-          />
-        </div>
-
-        <!-- HOUSE NUMBER -->
-        <div class="half-size">
-          <label>House number*</label>
-          <input
-            type="number"
-            required
-            min="1"
-            max="2000"
-            v-model="form.location.houseNumber"
-            placeholder="Enter the house number"
-          />
-        </div>
-
-        <!-- ADDITION -->
-        <div class="half-size">
-          <label>Addition (optional)</label>
-          <input
-            type="text"
-            v-model="form.location.houseNumberAddition"
-            placeholder="e.g. A"
-          />
-        </div>
-
-        <!-- ZIP -->
-        <div class="full-size">
-          <label>Postal code*</label>
-          <input
-            type="text"
-            required
-            pattern="^[1-9][0-9]{3} ?(?!sa|SA|sd|SD|ss|SS)[a-zA-Z]{2}$"
-            minlength="6"
-            maxlength="7"
-            v-model="form.location.zip"
-            placeholder="e.g. 1000 AA"
-          />
-        </div>
-
-        <!-- CITY -->
-        <div class="full-size">
-          <label>City*</label>
-          <input
-            type="text"
-            required
-            minlength="2"
-            maxlength="20"
-            v-model="form.location.city"
-            placeholder="e.g. Utrecht"
-          />
-        </div>
-
-        <!-- IMAGE -->
-        <div class="full-size">
-          <label>Upload picture (PNG or JPG)*</label>
-          <div class="input-wrapper" 
-          :class="{ 'has-image': image || originalImageUrl }"
-          ref="imageWrapper"
-          >
+      <form @submit.prevent="handleSubmit" novalidate>
+          <!-- STREET -->
+          <div class="full-size">
+            <label>Street name*</label>
             <input
-              type="file"
-              accept="image/png, image/jpeg"
-              @change="handleImageChange"
+              type="text"
+              v-model="form.location.street"
+              placeholder="Enter the street name"
+              @blur="v$.location.street.$touch()"
+              :class="{ error: hasError(v$.location.street) }"
             />
-            <button
-              v-if="image || originalImageUrl"
-              class="clear-button-white"
-              @click.prevent="clearImage"
-            >
-              <img src="../assets/ic_clear_white@3x.png" alt="Clear" />
+
+            <p v-if="hasError(v$.location.street)" class="error-text">
+              <span v-if="v$.location.street.required.$invalid">
+                Required field missing.
+              </span>
+              <span v-else-if="v$.location.street.minLength.$invalid">
+                Street must be at least 2 characters long.
+              </span>
+              <span v-else-if="v$.location.street.maxLength.$invalid">
+                Street cannot be longer than 50 characters.
+              </span>
+            </p>
+          </div>
+  
+          <!-- HOUSE NUMBER -->
+          <div class="half-size">
+            <label>House number*</label>
+            <input
+              type="number"
+              v-model="form.location.houseNumber"
+              placeholder="Enter the house number"
+              @blur="v$.location.houseNumber.$touch()"
+              :class="{ error: hasError(v$.location.houseNumber) }"
+            />
+
+            <p v-if="hasError(v$.location.houseNumber)" class="error-text">
+              <span v-if="v$.location.houseNumber.required.$invalid">
+                Required field missing.
+              </span>
+              <span v-else-if="v$.location.houseNumber.minValue.$invalid">
+                House number must be at least 1.
+              </span>
+            </p>
+          </div>
+  
+          <!-- ADDITION -->
+          <div class="half-size">
+            <label>Addition (optional)</label>
+            <input
+              type="text"
+              v-model="form.location.houseNumberAddition"
+              placeholder="e.g. A"
+            />
+          </div>
+  
+          <!-- ZIP -->
+          <div class="full-size">
+            <label>Postal code*</label>
+            <input
+              type="text"
+              v-model="form.location.zip"
+              placeholder="e.g. 1000 AA"
+              @blur="v$.location.zip.$touch()"
+              :class="{ error: hasError(v$.location.zip) }"
+            />
+
+            <p v-if="hasError(v$.location.zip)" class="error-text">
+              <span v-if="v$.location.zip.required.$invalid">Required field missing.</span>
+              <span v-else-if="v$.location.zip.zipPattern.$invalid">Invalid postal code format.</span>
+            </p>
+          </div>
+  
+          <!-- CITY -->
+          <div class="full-size">
+            <label>City*</label>
+            <input
+              type="text"
+              v-model="form.location.city"
+              placeholder="e.g. Utrecht"
+              @blur="v$.location.city.$touch()"
+              :class="{ error: hasError(v$.location.city) }"
+            />
+
+            <p v-if="hasError(v$.location.city)" class="error-text">
+              <span v-if="v$.location.city.required.$invalid">
+                Required field missing.
+              </span>
+              <span v-else-if="v$.location.city.minLength.$invalid">
+                City must be at least 2 characters long.
+              </span>
+              <span v-else-if="v$.location.city.maxLength.$invalid">
+                City cannot be longer than 50 characters.
+              </span>
+            </p>
+          </div>
+  
+          <!-- IMAGE -->
+          <div class="full-size">
+            <label>Upload picture (PNG or JPG)*</label>
+            <div class="input-wrapper" :class="{ 'has-image': image || originalImageUrl }" ref="imageWrapper">
+              <input
+                type="file"
+                accept="image/png, image/jpeg"
+                @change="handleImageChange"
+              />
+              <button
+                v-if="image || originalImageUrl"
+                class="clear-button-white"
+                @click.prevent="clearImage"
+              >
+                <img class="btn-clearImage" src="../assets/ic_clear_white@3x.png" alt="Clear" />
+              </button>
+            </div>
+            <p v-if="imageError" class="error-text">
+              Required field missing.
+            </p>
+          </div>
+  
+          <!-- PRICE -->
+          <div class="full-size">
+            <label>Price*</label>
+            <input
+              type="number"
+              v-model="form.price"
+              placeholder="e.g. €150.000"
+              @blur="v$.price.$touch()"
+              :class="{ error: hasError(v$.price) }"
+            />
+
+            <p v-if="hasError(v$.price)" class="error-text">
+              Required field missing.
+            </p>
+          </div>
+  
+          <!-- SIZE -->
+          <div class="half-size">
+            <label>Size*</label>
+            <input
+              type="number"
+              v-model="form.size"
+              placeholder="e.g. 60 m2"
+              @blur="v$.size.$touch()"
+              :class="{ error: hasError(v$.size) }"
+            />
+
+            <p v-if="hasError(v$.size)" class="error-text">
+              <span v-if="v$.size.required.$invalid">
+                Required field missing.
+              </span>
+              <span v-else-if="v$.size.minValue.$invalid">
+                Size must be at least 10 m2.
+              </span>
+            </p>
+          </div>
+  
+          <!-- GARAGE -->
+          <div class="half-size">
+            <label>Garage*</label>
+            <select v-model="form.hasGarage">
+              <option disabled value="">Select</option>
+              <option :value="true">Yes</option>
+              <option :value="false">No</option>
+            </select>
+
+            <p v-if="hasError(v$.hasGarage)" class="error-text">
+              Required field missing.
+            </p>
+          </div>
+  
+          <!-- ROOMS -->
+          <div class="half-size">
+            <label>Bedrooms*</label>
+            <input type="number" 
+                v-model="form.rooms.bedrooms"
+                placeholder="Enter amount" 
+                @blur="v$.rooms.bedrooms.$touch()"
+                :class="{ error: hasError(v$.rooms.bedrooms) }"
+            />
+
+            <p v-if="hasError(v$.rooms.bedrooms)" class="error-text">
+              <span v-if="v$.rooms.bedrooms.required.$invalid">
+                Required field missing.
+              </span>
+              <span v-else-if="v$.rooms.bedrooms.minValue.$invalid">
+                Number of bedrooms must be at least 1.
+              </span>
+            </p>
+          </div>
+  
+          <div class="half-size">
+            <label>Bathrooms*</label>
+            <input type="number" 
+                v-model="form.rooms.bathrooms" 
+                placeholder="Enter amount"
+                @blur="v$.rooms.bathrooms.$touch()"
+                :class="{ error: hasError(v$.rooms.bathrooms) }"
+            />
+
+            <p v-if="hasError(v$.rooms.bathrooms)" class="error-text">
+              <span v-if="v$.rooms.bathrooms.required.$invalid">
+                Required field missing.
+              </span>
+              <span v-else-if="v$.rooms.bathrooms.minValue.$invalid">
+                Number of bathrooms must be at least 1.
+              </span>
+            </p>
+          </div>
+  
+          <!-- YEAR -->
+          <div class="full-size">
+            <label>Construction date*</label>
+            <input
+              type="number"
+              v-model="form.constructionYear"
+              placeholder="e.g. 1990"
+              @blur="v$.constructionYear.$touch()"
+              :class="{ error: hasError(v$.constructionYear) }"
+            />
+
+            <p v-if="hasError(v$.constructionYear)" class="error-text">
+              <span v-if="v$.constructionYear.required.$invalid">
+                Required field missing.
+              </span>
+              <span v-else-if="v$.constructionYear.minValue.$invalid">
+                Year must be 1700 or later.
+              </span>
+              <span v-else-if="v$.constructionYear.maxValue.$invalid">
+                Year cannot be later than {{ currentYear }}.
+              </span>
+            </p>
+          </div>
+  
+          <!-- DESCRIPTION -->
+          <div class="full-size">
+            <label>Description*</label>
+            <textarea
+              rows="4"
+              v-model="form.description"
+              placeholder="Enter description"
+              @blur="v$.description.$touch()"
+              :class="{ error: hasError(v$.description) }"
+            />
+
+            <p v-if="hasError(v$.description)" class="error-text">
+              <span v-if="v$.description.required.$invalid">
+                Required field missing.
+              </span>
+              <span v-else-if="v$.description.minLength.$invalid">
+                Description must be at least 15 characters long.
+              </span>
+              <span v-else-if="v$.description.maxLength.$invalid">
+                Description cannot be longer than 10000 characters.
+              </span>
+            </p>
+          </div>
+  
+          <div class="form-btn-wrapper">
+            <button class="submit-form-button"
+            :disabled="(v$.$anyDirty && v$.$invalid) || imageError || isSubmitting">
+              {{ isSubmitting ? 'Loading…' : 'Save' }}
             </button>
           </div>
-        </div>
+        </form>
 
-        <!-- PRICE -->
-        <div class="full-size">
-          <label>Price*</label>
-          <input
-            type="number"
-            required
-            min="300"
-            v-model="form.price"
-            placeholder="e.g. €150.000"
-          />
-        </div>
-
-        <!-- SIZE -->
-        <div class="half-size">
-          <label>Size*</label>
-          <input
-            type="number"
-            required
-            min="10"
-            v-model="form.size"
-            placeholder="e.g. 60m2"
-          />
-        </div>
-
-        <!-- GARAGE -->
-        <div class="half-size">
-          <label>Garage*</label>
-          <select required v-model="form.hasGarage">
-            <option disabled value="">Select</option>
-            <option :value="true">Yes</option>
-            <option :value="false">No</option>
-          </select>
-        </div>
-
-        <!-- ROOMS -->
-        <div class="half-size">
-          <label>Bedrooms*</label>
-          <input type="number" 
-              required min="1" 
-              v-model="form.rooms.bedrooms"
-              placeholder="Enter amount" 
-          />
-        </div>
-
-        <div class="half-size">
-          <label>Bathrooms*</label>
-          <input type="number" 
-              required min="1" 
-              v-model="form.rooms.bathrooms" 
-              placeholder="Enter amount"
-          />
-        </div>
-
-        <!-- YEAR -->
-        <div class="full-size">
-          <label>Construction date*</label>
-          <input
-            type="number"
-            required
-            min="1700"
-            :max="currentYear"
-            v-model="form.constructionYear"
-            placeholder="e.g. 1990"
-          />
-        </div>
-
-        <!-- DESCRIPTION -->
-        <div class="full-size">
-          <label>Description*</label>
-          <textarea
-            required
-            minlength="5"
-            rows="4"
-            v-model="form.description"
-            placeholder="Enter description"
-          />
-        </div>
-
-        <div class="form-btn-wrapper">
-          <button class="submit-form-button">
-            {{ isSubmitting ? 'Loading…' : 'Edit' }}
-          </button>
-        </div>
-      </form>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -191,6 +286,9 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/stores/store'
+import useVuelidate from '@vuelidate/core'
+import { required, minLength, maxLength, minValue, maxValue, helpers } from '@vuelidate/validators'
+import { computed } from 'vue'
 
 export default {
   name: 'HouseEditView',
@@ -199,6 +297,19 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
+
+    const hasError = (field) => field.$dirty && field.$invalid
+
+    const zipPattern = helpers.withMessage(
+      'Invalid postal code format.',
+      helpers.withParams(
+        { type: 'zipPattern' },
+        (value) => {
+          if (!value) return true
+          return /^[1-9][0-9]{3} ?(?!sa|SA|sd|SD|ss|SS)[a-zA-Z]{2}$/.test(value)
+        }
+      )
+    )
 
     const form = ref({
       location: {
@@ -219,13 +330,41 @@ export default {
       description: '',
     })
 
+    const currentYear = new Date().getFullYear()
+
+    const rules = {
+      location: {
+        street: { required, minLength: minLength(2), maxLength: maxLength(50) },
+        houseNumber: { required, minValue: minValue(1) },
+        zip: { required, zipPattern, minLength: minLength(6), maxLength: maxLength(7) },
+        city: { required, minLength: minLength(2), maxLength: maxLength(50) }
+      },
+      price: { required },
+      size: { required, minValue: minValue(10) },
+      hasGarage: { required },
+      rooms: {
+        bedrooms: { required, minValue: minValue(1) },
+        bathrooms: { required, minValue: minValue(1) }
+      },
+      constructionYear: { required, minValue: minValue(1700), maxValue: maxValue(currentYear) },
+      description: { required, minLength: minLength(15), maxLength: maxLength(10000) }
+    }
+
+    const v$ = useVuelidate(rules, form)
+
     const image = ref(null)
     const imageWrapper = ref(null)
     const originalImageUrl = ref(null)
     const hasNewImage = ref(false)
     const imageRemoved = ref(false)
     const isSubmitting = ref(false)
-    const currentYear = new Date().getFullYear()
+
+    // true or false
+    const hasImage = computed(() => {
+      return !!(image.value || originalImageUrl.value)
+    })
+
+    const imageError = computed(() => !hasImage.value)
 
     // Load house data
     onMounted(async () => {
@@ -261,6 +400,7 @@ export default {
 
     const handleImageChange = (e) => {
     const file = e.target.files[0]
+    imageError.value = false
     if (!file) return
 
     image.value = file
@@ -278,13 +418,17 @@ export default {
       hasNewImage.value = false
       originalImageUrl.value = null
       imageRemoved.value = true
-      
+
       if (imageWrapper.value) {
       imageWrapper.value.style.backgroundImage = ''
       }
     }
 
     const handleSubmit = async () => {
+      v$.value.$touch()
+
+      if (v$.value.$invalid || imageError.value) return
+
       isSubmitting.value = true
 
       try {
@@ -332,6 +476,11 @@ export default {
       handleSubmit,
       currentYear,
       isSubmitting,
+      imageError,
+      v$,
+      hasError,
+      zipPattern,
+      hasImage
     }
   },
 }

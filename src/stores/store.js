@@ -70,7 +70,18 @@ export const useStore = defineStore('store', {
         throw new Error('Failed to create house')
       }
     
-      const createdHouse = await res.json()
+      // const createdHouse = await res.json()
+
+      const text = await res.text()
+
+      let createdHouse
+      try {
+        createdHouse = JSON.parse(text)
+      } catch {
+        console.error('Non-JSON response:', text)
+        throw new Error('Invalid server response')
+      }
+
     
       const imageRes = await fetch(
         `${baseUrl}/${createdHouse.id}/upload`,

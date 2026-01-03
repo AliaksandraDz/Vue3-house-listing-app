@@ -88,11 +88,13 @@
     color: var(--dark-grey);
     text-decoration: none;
     font-size: 18px;
+    font-family: "Montserrat";
   }
   
   .nav-header a.router-link-active {
     color: var(--black);
-    font-weight: bold;
+    font-family: "Montserrat";
+    font-weight: 700;
   }
   
   /* Hide header on small devices */
@@ -166,28 +168,45 @@
     font-family: "Open Sans";
   }
   
-  h1, h2, h3, button {
+  h1, h2, button {
     font-family: "Montserrat";
-    font-weight: bold;
+    font-weight: 700;
   }
   
   label {
     font-family: "Montserrat";
     font-weight: 600;
+    color: var(--dark-grey)
   }
   
   input {
     font-family: "Open Sans";
   }
+
+  button {
+    font-family: "Montserrat";
+    font-weight: 700;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
   /* Large devices */
   @media (min-width: 767px) {
     h1 { font-size: 32px; }
     h2 { font-size: 22px; }
-    button { font-size: 18px; }
+    button, .btn { font-size: 18px; }
     .back-label {
       font-size: 16px;
       font-family: "Montserrat";
       font-weight: 600;
+    }
+    a img, button img {
+      height:  18px;
+    }
+    label {
+      font-size: 14px;
     }
   }
   
@@ -195,13 +214,15 @@
   @media (max-width: 768px) {
     h1 {
       font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
     }
     h2 { font-size: 14px; }
-    button { font-size: 12px; }
+    button, .btn { font-size: 12px; }
+    a img, button img {
+      height:  12px;
+    }
+    label {
+      font-size: 12px;
+    }
   }
   
   /* =========================
@@ -314,16 +335,27 @@
     padding-top: 50px;
   }
   .no-results img {
-    width: 220px;
-    height: 110px;
+    height: 180px;
   }
   .no-results p {
-    font-size: 12px;
     font-family: "Montserrat";
-    font-weight: 500; /*medium*/ 
+    font-weight: 500;
+    color: var(--dark-grey)
   }
   .no-results-text {
-    padding-top: 25px;
+    padding-top: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .no-results p {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .no-results p {
+      font-size: 18px;
+    }
   }
 
   /* =========================
@@ -348,7 +380,6 @@
   }
   
   .houses-title {
-    font-size: 35.2px;
     font-weight: 700;
     margin: 0;
   }
@@ -380,8 +411,6 @@
   
   /* create button icon & label */
   .btn-create-icon {
-    width: 16px;
-    height: 16px;
     margin-right: 8px;
   }
   
@@ -451,8 +480,6 @@
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    width: 26px;
-    height: 26px;
     border: none;
     border-radius: 50%;
     display: flex;
@@ -609,10 +636,6 @@
   background-color: var(--white);
 }
 
-.btn-back-icon {
-  height: 20px;
-}
-
 .main-house-card-info p {
   color: var(--dark-grey);
 }
@@ -645,9 +668,6 @@
   background-color: transparent;
   padding: 0 0 0 10px;
 }
-.btn-edit-icon, .btn-delete-icon {
-  height: 20px;
-}
 
 @media (min-width: 769px) {
   .house-details {
@@ -659,6 +679,12 @@
   .house-actions {
     display: flex;
     gap: 8px;
+  }
+  .btn-back-label {
+    font-size: 16px;
+    color: var(--black);
+    font-family: "Montserrat";
+    font-weight: 600;
   }
 }
 
@@ -789,8 +815,8 @@
   background-attachment: fixed;
   padding: 20px;
 }
-.btn-edit-back-icon {
-  height: 20px;
+.btn-clearImage {
+  height: 35px;
 }
 /* Small devices */
 @media (max-width: 768px) {
@@ -903,8 +929,6 @@ input[type=file] {
   background-color: transparent;
 }
 .clear-button-white img {
-  /* width: 35px; */
-  height: 35px;
   max-width: 35px;
 }
 form {
@@ -921,35 +945,67 @@ form > div {
 }
 .submit-form-button {
   border: none;
-  color: white;
+  color: var(--white);
   text-align: center;
   text-decoration: none;
   padding: 12px 0;
   width: 100%;
   border-radius: 7px;
   text-transform: uppercase;
-  background-color: #EB5440;
+  background-color: var(--red);
   cursor: pointer;
+}
+.submit-form-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 .house-create-wrapper,
 .house-edit-wraper {
   margin-bottom: 60px;
 }
+.error-text {
+  padding-top: 10px;
+  color: var(--red);
+  font-family: "Montserrat";
+  font-style: italic;
+}
+.error-text span {
+  color: var(--red);
+  font-family: "Montserrat";
+  font-style: italic;
+}
+.full-size input[type=text].error, .full-size input[type=number].error, textarea.error,
+.half-size input[type=text].error, .half-size input[type=number].error,
+.half-size select.error {
+  border: 1px solid var(--red);
+}
+input.error::placeholder,
+textarea.error::placeholder {
+  color: var(--red);
+}
 /* Large devices */
 @media (min-width: 768px) {
   .house-create-wrapper, 
   .house-edit-wraper {
-  width: 50%;
+    width: 50%;
   }
   .form-btn-wrapper {
-      grid-column-start: 2;
-      grid-column-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 2;
+  }
+  .error-text,
+  .error-text span {
+    font-size: 14px;
   }
 }
 /* Small devices */
 @media (max-width: 769px) {
   .form-btn-wrapper {
       grid-column: 1 / span 2;
+  }
+  .error-text,
+  .error-text span {
+    font-size: 12px;
   }
 }
 /* Hide arrows */
