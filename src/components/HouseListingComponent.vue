@@ -3,7 +3,7 @@
     <article class="house-card">
       <img class="house-card-image" :src="house.image" alt="House"/>
       <div class="house-card-info">
-        <h3 class="house-card-title">{{ house.location.street }} {{ house.location.houseNumber }}
+        <h2 class="house-card-title">{{ house.location.street }} {{ house.location.houseNumber }}
           <div class="house-card-actions" v-if="house.madeByMe">
             <router-link
               :to="{ name: 'HouseEditView', params: { id: house.id }}"
@@ -14,7 +14,7 @@
                 <img class="btn-delete-icon" src="../assets/ic_delete@3x.png" alt="Delete" />
             </button>
           </div>
-        </h3>
+        </h2>
         <p class="house-card-price">€ {{ house.price }}</p>
         <p class="house-card-address">{{ house.location.zip }} {{ house.location.city }}</p>
         <p class="house-card-meta">

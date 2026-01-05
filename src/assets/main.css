@@ -222,7 +222,7 @@
     h2 { font-size: 14px; }
     button, .btn { font-size: 12px; }
     a img, button img {
-      height:  12px;
+      height:  16px;
     }
     label {
       font-size: 12px;
@@ -339,7 +339,8 @@
     align-items: center;
     gap: 20px;
     font-size: 16px;
-    color: var(--dark-grey)
+    color: var(--dark-grey);
+    font-weight: 500;
   }
   
   .meta-item {
@@ -349,7 +350,6 @@
   }
   .meta-item img {
     width: 18px;
-    height: 18px;
   }
   
   .house-card:hover {
@@ -692,6 +692,28 @@
 
 .recommended-house-meta {
   display: flex;
+  font-size: 15px;
+  padding-top: 7px;
+  gap: 20px;
+  color: var(--dark-grey);
+}
+
+.recommended-house-card-title {
+  font-size: 15px;
+  color: var(--black);
+  font-weight: 700;
+}
+
+.recommended-house-card-price {
+  font-size: 15px;
+  color: var(--dark-grey);
+  font-weight: 600;
+}
+
+.recommended-house-card-location {
+  font-size: 15px;
+  color: var(--grey);
+  font-weight: 500;
 }
 
 .main-house-card-image {
@@ -707,17 +729,12 @@
   flex-direction: column;
   gap: 8px;
   justify-content: center;
-  padding: 20px;
+  padding: 30px;
   background-color: var(--white);
 }
 
 .main-house-card-info p {
   color: var(--dark-grey);
-}
-
-.main-house-card-title {
-  font-size: 20px;
-  margin-bottom: 4px;
 }
 
 .main-house-card-price {
@@ -732,8 +749,12 @@
 .main-house-card-meta {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
   font-size: 14.4px;
+  font-weight: 600;
+}
+.main-house-card-description {
+  padding-top: 10px;
 }
 .btn-back {
   background-color: transparent;
@@ -825,9 +846,9 @@
     width: 90%;
     margin: 100px auto 
   }
-  picture img {
+  /* picture img {
       padding: 30px 0 0 15px;
-  }
+  } */
 }
 .main-house-card-header {
   display: flex;
@@ -848,17 +869,9 @@
   align-items: center;
   cursor: pointer;
 }
-.recommended-card-text p, 
-.recommended-card-text h3 {
-  padding: 0 10px;
-}
-.recommended-card-text img {
-  width: 10px;
-  height: 10px;
-} 
 .recommended-card-info-img {
-  width: 130px;
-  height: 130px;
+  width: 120px;
+  height: 120px;
   border-radius: 15px;
   padding: 10px;
 }
@@ -1098,12 +1111,13 @@ form > div {
   padding-top: 10px;
   color: var(--red);
   font-family: "Montserrat";
-  font-style: italic;
+  font-weight: 500;
 }
 .error-text span {
   color: var(--red);
   font-family: "Montserrat";
   font-style: italic;
+  font-weight: 500;
 }
 .full-size input[type=text].error, .full-size input[type=number].error, textarea.error,
 .half-size input[type=text].error, .half-size input[type=number].error,
@@ -1113,6 +1127,7 @@ form > div {
 input.error::placeholder,
 textarea.error::placeholder {
   color: var(--red);
+  font-weight: 500;
 }
 /* Large devices */
 @media (min-width: 769px) {

@@ -46,9 +46,9 @@
 
       <div class="main-house-card-info">
         <div class="main-house-card-header">
-          <h3 class="main-house-card-title">
+          <h1 class="main-house-card-title">
             {{ houseDetails?.location?.street }} {{ houseDetails?.location?.houseNumber }}
-          </h3>
+          </h1>
 
           <!-- Large devices -->
           <div class="house-actions" v-if="houseDetails?.madeByMe">
@@ -118,9 +118,9 @@
           <div class="recommended-card-info" @click="navigateToHouseDetails(recommendedHouse.id)">
               <img :src="recommendedHouse.image" class="recommended-card-info-img" alt="House Image" />
               <div class="recommended-card-text">
-                  <h3>{{ recommendedHouse.location.street }} {{ recommendedHouse.location.houseNumber }}</h3>
-                  <p>€ {{ recommendedHouse.price }} </p>
-                  <p>{{ recommendedHouse.location.zip }} {{ recommendedHouse.location.city }}</p>
+                  <h3 class="recommended-house-card-title">{{ recommendedHouse.location.street }} {{ recommendedHouse.location.houseNumber }}</h3>
+                  <p class="recommended-house-card-price">€ {{ recommendedHouse.price }} </p>
+                  <p class="recommended-house-card-location">{{ recommendedHouse.location.zip }} {{ recommendedHouse.location.city }}</p>
                   <p class="recommended-house-meta">
                     <span class="meta-item">
                       <img src="../assets/ic_bed@3x.png" alt="Bed" /> {{ recommendedHouse.rooms.bedrooms }}
