@@ -36,7 +36,7 @@ export const useStore = defineStore('store', {
       }
     
       const data = await res.json()
-      return data[0]  // always return a single object
+      return data[0]
     },
 
     async deleteHouse(id) {
@@ -69,8 +69,6 @@ export const useStore = defineStore('store', {
       if (!res.ok) {
         throw new Error('Failed to create house')
       }
-    
-      // const createdHouse = await res.json()
 
       const text = await res.text()
 
@@ -143,7 +141,6 @@ export const useStore = defineStore('store', {
         }
       }
     },
-    
 
     clearSearch() {
       this.searchInput = '';

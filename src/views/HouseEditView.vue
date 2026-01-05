@@ -1,19 +1,20 @@
 <template>
-  <div class="house-create">
-      <div class="house-create-wrapper">
-        <div class="create-header-row">
+  <div class="house-edit">
+      <div class="house-edit-wrapper">
+        <div class="edit-header-row">
           <router-link :to="{ name: 'HouseDetailsView',
             query: { delete: false }, params: { id: $route.params.id } }" 
             class="btn btn-edit-back">
             <img class="btn-edit-back-icon" src="../assets/ic_back_grey@3x.png" alt="Back" />
             <p class="back-label">Back to detail page</p>
           </router-link>
-          <h1 class="create-header-sm">Edit listing</h1>
+          <h1 class="edit-header-sm">Edit listing</h1>
         </div>
 
-      <h1 class="create-header-lg">Edit listing</h1>
+      <h1 class="edit-header-lg">Edit listing</h1>
 
       <form @submit.prevent="handleSubmit" novalidate>
+
           <!-- STREET -->
           <div class="full-size">
             <label>Street name*</label>
@@ -283,12 +284,11 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/stores/store'
 import useVuelidate from '@vuelidate/core'
 import { required, minLength, maxLength, minValue, maxValue, helpers } from '@vuelidate/validators'
-import { computed } from 'vue'
 
 export default {
   name: 'HouseEditView',
@@ -297,19 +297,6 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
-
-    const hasError = (field) => field.$dirty && field.$invalid
-
-    const zipPattern = helpers.withMessage(
-      'Invalid postal code format.',
-      helpers.withParams(
-        { type: 'zipPattern' },
-        (value) => {
-          if (!value) return true
-          return /^[1-9][0-9]{3} ?(?!sa|SA|sd|SD|ss|SS)[a-zA-Z]{2}$/.test(value)
-        }
-      )
-    )
 
     const form = ref({
       location: {
@@ -331,6 +318,20 @@ export default {
     })
 
     const currentYear = new Date().getFullYear()
+    const isSubmitting = ref(false)
+
+    const hasError = (field) => field.$dirty && field.$invalid
+
+    const zipPattern = helpers.withMessage(
+      'Invalid postal code format.',
+      helpers.withParams(
+        { type: 'zipPattern' },
+        (value) => {
+          if (!value) return true
+          return /^[1-9][0-9]{3} ?(?!sa|SA|sd|SD|ss|SS)[a-zA-Z]{2}$/.test(value)
+        }
+      )
+    )
 
     const rules = {
       location: {
@@ -356,8 +357,6 @@ export default {
     const imageWrapper = ref(null)
     const originalImageUrl = ref(null)
     const hasNewImage = ref(false)
-    const imageRemoved = ref(false)
-    const isSubmitting = ref(false)
 
     // true or false
     const hasImage = computed(() => {
@@ -365,6 +364,31 @@ export default {
     })
 
     const imageError = computed(() => !hasImage.value)
+
+    const handleImageChange = (e) => {
+      const file = e.target.files[0]
+      imageError.value = false
+      if (!file) return
+
+      image.value = file
+      hasNewImage.value = true
+
+      if (imageWrapper.value) {
+        imageWrapper.value.style.backgroundImage =
+          `url(${URL.createObjectURL(file)})`
+        imageWrapper.value.style.backgroundSize = 'cover'
+      }
+    }
+
+    const clearImage = () => {
+      image.value = null
+      hasNewImage.value = false
+      originalImageUrl.value = null
+
+      if (imageWrapper.value) {
+      imageWrapper.value.style.backgroundImage = ''
+      }
+    }
 
     // Load house data
     onMounted(async () => {
@@ -397,32 +421,6 @@ export default {
         console.error('Failed to load house:', err)
       }
     })
-
-    const handleImageChange = (e) => {
-    const file = e.target.files[0]
-    imageError.value = false
-    if (!file) return
-
-    image.value = file
-    hasNewImage.value = true
-
-    if (imageWrapper.value) {
-      imageWrapper.value.style.backgroundImage =
-        `url(${URL.createObjectURL(file)})`
-      imageWrapper.value.style.backgroundSize = 'cover'
-    }
-  }
-
-    const clearImage = () => {
-      image.value = null
-      hasNewImage.value = false
-      originalImageUrl.value = null
-      imageRemoved.value = true
-
-      if (imageWrapper.value) {
-      imageWrapper.value.style.backgroundImage = ''
-      }
-    }
 
     const handleSubmit = async () => {
       v$.value.$touch()

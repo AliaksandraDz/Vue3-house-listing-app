@@ -160,7 +160,7 @@ const fetchData = async (id) => {
   isLoading.value = true
 
   try {
-    // Load houses once (store can cache internally)
+
     await store.getHouses()
 
     const currentHouse = store.houses.find(h => h.id === id)

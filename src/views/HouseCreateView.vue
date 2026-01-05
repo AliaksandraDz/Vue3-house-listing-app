@@ -3,7 +3,7 @@
         <div class="house-create-wrapper">
           <div class="create-header-row">
             <router-link to="/" class="btn btn-edit-back">
-              <img class="btn-edit-back-icon" src="../assets/ic_back_grey@3x.png" alt="Back" />
+              <img class="btn-create-back-icon" src="../assets/ic_back_grey@3x.png" alt="Back" />
               <p class="back-label">Back to overview</p>
             </router-link>
             <h1 class="create-header-sm">Create new listing</h1>
@@ -12,6 +12,7 @@
         <h1 class="create-header-lg">Create new listing</h1>
   
         <form @submit.prevent="handleSubmit" novalidate>
+          
           <!-- STREET -->
           <div class="full-size">
             <label>Street name*</label>
@@ -282,12 +283,11 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from '@/stores/store'
 import { useRouter } from 'vue-router'
 import useVuelidate from '@vuelidate/core'
 import { required, minLength, maxLength, minValue, maxValue, helpers } from '@vuelidate/validators'
-import { computed } from 'vue'
 
 
 export default {
@@ -297,21 +297,6 @@ export default {
 
     const router = useRouter()
     const store = useStore()
-
-    const hasError = (field) => field.$dirty && field.$invalid
-
-    const imageTouched = ref(false)
-
-    const zipPattern = helpers.withMessage(
-      'Invalid postal code format.',
-      helpers.withParams(
-        { type: 'zipPattern' },
-        (value) => {
-          if (!value) return true
-          return /^[1-9][0-9]{3} ?(?!sa|SA|sd|SD|ss|SS)[a-zA-Z]{2}$/.test(value)
-        }
-      )
-    )
 
     const form = ref({
       location: {
@@ -333,6 +318,20 @@ export default {
     })
 
     const currentYear = new Date().getFullYear()
+    const isSubmitting = ref(false)
+
+    const hasError = (field) => field.$dirty && field.$invalid
+
+    const zipPattern = helpers.withMessage(
+      'Invalid postal code format.',
+      helpers.withParams(
+        { type: 'zipPattern' },
+        (value) => {
+          if (!value) return true
+          return /^[1-9][0-9]{3} ?(?!sa|SA|sd|SD|ss|SS)[a-zA-Z]{2}$/.test(value)
+        }
+      )
+    )
 
     const rules = {
       location: {
@@ -356,7 +355,7 @@ export default {
 
     const image = ref(null)
     const imageWrapper = ref(null)
-    const isSubmitting = ref(false)
+    const imageTouched = ref(false)
 
     const imageError = computed(() => {
       return imageTouched.value && !image.value

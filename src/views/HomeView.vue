@@ -1,5 +1,6 @@
 <template>
     <section class="houses-page main">
+
     <!-- Top row: title + create button -->
     <div class="houses-header">
       <h1 class="houses-title">Houses</h1>
@@ -23,7 +24,8 @@
 
     <!-- Search + sort controls -->
     <div class="houses-controls">
-      <!-- search -->
+
+      <!-- Search -->
       <div class="search-bar">
         <button class="search-bar-icon" type="button">
           <img src="../assets/ic_search@3x.png" alt="Search" />
@@ -46,7 +48,7 @@
         </button>
       </div>
 
-      <!-- price / size toggle -->
+      <!-- Price / size toggle -->
       <div class="sort-toggle">
         <button
           class="sort-toggle-btn"
@@ -67,30 +69,48 @@
       </div>
     </div>
 
-    <!-- results counter -->
-    <p v-if="store.searchInput.length > 0 && store.filteredHouses.length > 0" 
+    <!-- Results counter -->
+    <h2 v-if="store.searchInput.length > 0 && store.filteredHouses.length == 1" 
+      class="search-result">
+      {{ store.filteredHouses.length }} result found
+    </h2>
+    <h2 v-else-if="store.searchInput.length > 0 && store.filteredHouses.length > 0" 
       class="search-result">
       {{ store.filteredHouses.length }} results found
-    </p>
+    </h2>
+
+  </section>
+
+  <!-- List of houses -->
+  <div v-if="isLoading" class="loading">Loading...</div>
+  <div v-else class="houses-list">
+    <HouseListingComponent v-for="house in store.filteredHouses" :key="house.id" :house="house" />
     <div v-show="store.filteredHouses.length === 0" class="no-results">
       <img src="../assets/img_empty_houses@3x.png" alt="No results" />
       <p class="no-results-text">No results found.</p>
       <p>Please try another keyword.</p>
     </div>
-
-    <!-- list of houses -->
-  </section>
-  <div class="houses-list">
-    <HouseListingComponent v-for="house in store.filteredHouses" :key="house.id" :house="house" />
   </div>
 </template>
 
 <script setup>
+import { ref, watchEffect } from 'vue'
 import { onMounted } from 'vue';
 import HouseListingComponent from '@/components/HouseListingComponent.vue'
 import { useStore } from '@/stores/store'
 
 const store = useStore();
+const isLoading = ref(true);
+
+const fetchData = async () => {
+  isLoading.value = true;
+  await store.getHouses()
+  isLoading.value = false;
+}
+
+watchEffect(() => {
+  fetchData();
+});
 
 onMounted(() => {
   store.getHouses();
