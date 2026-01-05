@@ -66,29 +66,30 @@
   
   header {
     background: var(--white);
-    height: 48px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-inline: 300px;
   }
   
   .nav-header {
-    width: 70%;
+    width: 100%;
     display: flex;
     align-items: center;
+    gap: 60px;
   }
   
   .nav-header img {
-    max-width: 60px;
-    padding: 0 20px 0 0;
+    height: 35px;
   }
   
   .nav-header a {
-    padding: 20px;
-    color: var(--dark-grey);
+    color: var(--grey);
     text-decoration: none;
     font-size: 18px;
     font-family: "Montserrat";
+    font-weight: 500;
   }
   
   .nav-header a.router-link-active {
@@ -108,7 +109,7 @@
     position: fixed;
     bottom: 0;
     background: var(--white);
-    height: 48px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,10 +119,12 @@
   .nav-footer {
     display: flex;
     align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding-inline: 70px;
   }
   
   .nav-footer a {
-    padding: 0 20px;
     color: var(--dark-grey);
     text-decoration: none;
   }
@@ -140,20 +143,17 @@
     content: url("./ic_mobile_navigarion_info_active@3x.png");
   }
   
-  .nav-footer img {
-    max-width: 40px;
-    margin: 0 100px;
-  }
-  
   .btn-home {
     float: left;
+    height: 30px;
   }
   .btn-about {
     float: right;
+    height: 30px;
   }
   
   /* Hide footer on large devices */
-  @media (min-width: 767px) {
+  @media (min-width: 769px) {
     footer {
       display: none;
     }
@@ -179,7 +179,7 @@
     color: var(--dark-grey)
   }
   
-  input {
+  input, select {
     font-family: "Open Sans";
   }
 
@@ -193,25 +193,29 @@
   }
 
   /* Large devices */
-  @media (min-width: 767px) {
+  @media (min-width: 769px) {
+    body {
+      font-size: 18px;
+    }
     h1 { font-size: 32px; }
     h2 { font-size: 22px; }
     button, .btn { font-size: 18px; }
-    .back-label {
-      font-size: 16px;
-      font-family: "Montserrat";
-      font-weight: 600;
-    }
     a img, button img {
       height:  18px;
     }
     label {
       font-size: 14px;
     }
+    input, select {
+      font-size: 14px;
+    }
   }
   
   /* Small devices */
   @media (max-width: 768px) {
+    body {
+      font-size: 12px;
+    }
     h1 {
       font-size: 18px;
     }
@@ -223,6 +227,9 @@
     label {
       font-size: 12px;
     }
+    input, select {
+      font-size: 12px;
+    }
   }
   
   /* =========================
@@ -230,8 +237,7 @@
      ========================= */
   
   .houses-list {
-    margin: 32px auto;
-    padding-inline: 16px;
+    margin: 0 auto 25px auto;
     display: flex;
     flex-direction: column;
     gap: 1.5px;
@@ -241,33 +247,62 @@
     display: flex;
     align-items: stretch;
     background: var(--white);
-    border-radius: 18px;
-    box-shadow: 0 8px 20px var(--grey);
+    border-radius: 7px;
+    box-shadow: 0 3px 10px var(--light-grey);
     padding: 20px 24px;
-    width: 70%;
     margin-inline: auto;
   }
+
+  .house-card-info h3,
+  .house-card-info p {
+    font-family: "Open Sans";
+  }
+
+
   /* Small devices */
   @media (max-width: 768px) {
     .house-card {
       width: 100%;
+      padding: 15px;
+      margin-bottom: 15px;
     }
     .house-card-image {
-      width: 140px;
-      height: 140px;
+      width: 130px;
+      height: 130px;
+    }
+    .house-card-info h3,
+    .house-card-info p {
+      font-size: 12px;
+    }
+    .houses-list {
+      padding: 0 15px 50px 15px;
     }
   }
 
   /* Large devices */
   @media (min-width: 769px) {
+    .houses-list {
+      padding-inline: 300px;
+    }
+
+    .house-card {
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+
+    .house-card-info h3,
+    .house-card-info p {
+      font-size: 16px;
+    }
+
     .house-card-image {
-      width: 180px;
-      height: 180px;
+      width: 150px;
+      height: 150px;
     }
   }
   
   .house-card-image {
-    border-radius: 12px;
+    border-radius: 7px;
     object-fit: cover;
     flex-shrink: 0;
     margin-right: 28px;
@@ -281,32 +316,30 @@
     width: 100%
   }
   
-  .house-card-info p {
-    color: var(--dark-grey);
-  }
-  
   .house-card-title {
-    font-size: 20px;
-    margin-bottom: 4px;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    color: var(--black);
+    font-weight: 700;
   }
   
   .house-card-price {
     font-weight: 600;
-    margin-bottom: 4px;
+    color: var(--dark-grey);
   }
   
   .house-card-address {
-    margin-bottom: 12px;
+    color: var(--grey);
+    font-weight: 500;
   }
   
   .house-card-meta {
     display: flex;
     align-items: center;
     gap: 20px;
-    font-size: 14.4px;
+    font-size: 16px;
+    color: var(--dark-grey)
   }
   
   .meta-item {
@@ -321,7 +354,8 @@
   
   .house-card:hover {
     cursor: pointer;
-    box-shadow: 0 12px 30px var(--grey);
+    /* box-shadow: 0 12px 30px var(--grey); */
+    box-shadow: 0 5px 10px var(--light-grey);
     transform: translateY(-1px);
     transition: box-shadow 0.15s ease, transform 0.15s ease;
   }
@@ -364,7 +398,7 @@
   
   .houses-page {
     margin: 32px auto;
-    padding-inline: 16px;
+    /* padding-inline: 16px; */
     display: flex;
     flex-direction: column;
   }
@@ -375,7 +409,7 @@
     align-items: stretch;
     justify-content: space-between;
     margin-bottom: 28px;
-    width: 70%;
+    width: 100%;
     margin-inline: auto;
   }
   
@@ -395,23 +429,24 @@
     border: none;
     cursor: pointer;
     font: inherit;
+    gap: 10px;
   }
   
   /* primary button */
   .btn-primary {
     background-color: var(--red);
     color: var(--white);
-    border-radius: 8px;
-    padding: 9.6px 24px;
+    border-radius: 7px;
+    padding: 5px 25px;
     text-transform: uppercase;
-    font-size: 14.4px;
     font-weight: 600;
     height: 46px;
   }
   
   /* create button icon & label */
-  .btn-create-icon {
-    margin-right: 8px;
+
+  .btn-create-icon-sm {
+    height: 18px;
   }
   
   .create-button img {
@@ -420,6 +455,7 @@
   
   .btn-create-label {
     white-space: nowrap;
+    font-weight: 700;
   }
   
   /* =========================
@@ -431,7 +467,7 @@
     align-items: stretch;
     justify-content: space-between;
     margin-bottom: 28px;
-    width: 70%;
+    width: 100%;
     margin-inline: auto;
   }
   
@@ -447,7 +483,7 @@
     height: 46px;
     padding-left: 40px;
     padding-right: 40px;
-    border-radius: 8px;
+    border-radius: 7px;
     border: none;
     background-color: var(--light-grey);
     color: var(--dark-grey);
@@ -462,7 +498,7 @@
   /* ICON BUTTON (left) */
   .search-bar-icon {
     position: absolute;
-    left: 12px;
+    left: 17px;
     top: 50%;
     transform: translateY(-50%);
     border: none;
@@ -472,6 +508,7 @@
   }
   .search-bar-icon img {
     width: 18px;
+    height: 18px;
   }
   
   /* CLEAR BUTTON (right) */
@@ -496,15 +533,22 @@
      Responsive adjustments (general)
      ========================= */
   
-  @media (min-width: 767px) {
-    .btn-create img {
+  @media (min-width: 769px) {
+    .btn-create-icon-sm {
       display: none;
+    }
+    .houses-page {
+      padding-inline: 300px;
     }
   }
   
   @media (max-width: 768px) {
     .search-bar {
       max-width: none;
+    }
+
+    .btn-create-icon-lg {
+      display: none;
     }
   
     .search-bar-input {
@@ -514,6 +558,7 @@
   
     .houses-page {
       width: 100%;
+      
     }
   }
   
@@ -523,19 +568,32 @@
   
   .sort-toggle {
     display: inline-flex;
-    border-radius: 8px;
+    border-radius: 7px;
     overflow: hidden;
     background-color: var(--grey);
   }
   
   .sort-toggle-btn {
-    padding: 9.6px 28.8px;
+    padding: 5px 50px;
     border: none;
     background: transparent;
-    color: #fff;
-    font-size: 15.2px;
-    font-weight: 500;
+    color: var(--white);
+    font-weight: 700;
     height: 46px;
+  }
+
+  @media (min-width: 769px) {
+    .sort-toggle-btn,
+    .btn-primary {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sort-toggle-btn,
+    .btn-primary {
+      font-size: 12px;
+    }
   }
   
   .sort-toggle-btn--active {
@@ -553,21 +611,31 @@
     align-items: stretch;
     justify-content: space-between;
     margin-bottom: 28px;
-    width: 70%;
+    /* width: 70%; */
     margin-inline: auto;
+  }
+
+  @media (min-width: 769px) {
+    .search-result {
+      width: 70%;
+    }
   }
   
   /* mobile layout specifics */
   @media (max-width: 768px) {
     .houses-header {
-      justify-content: space-between;
-      width: 100%
+      padding: 0 15px;
     }
   
     .houses-title {
       font-size: 25.6px;
       text-align: center;
       flex: 1;
+    }
+
+    .search-result {
+      width: 100%;
+      padding-inline: 16px;
     }
   
     /* create button: icon only on small screens */
@@ -585,7 +653,8 @@
       flex-direction: column;
       align-items: stretch;
       gap: 12px;
-      width: 100%
+      margin: 0;
+      padding: 0 15px;
     }
   
     .sort-toggle {
@@ -613,10 +682,16 @@
 }
 
 .recommended-houses {
-  border: solid 1px black;
   flex: 0 1 20%;
   box-sizing: border-box;
-  margin-top: 43px;
+  margin-top: 76px;
+}
+.recommended-houses h2 {
+  padding-bottom: 15px;
+}
+
+.recommended-house-meta {
+  display: flex;
 }
 
 .main-house-card-image {
@@ -662,7 +737,7 @@
 }
 .btn-back {
   background-color: transparent;
-  padding: 10px 0;
+  padding: 30px 0;
 }
 .btn-delete, .btn-edit {
   background-color: transparent;
@@ -686,6 +761,10 @@
     font-family: "Montserrat";
     font-weight: 600;
   }
+  .recommended {
+    width: 40%;
+    margin: -20px 0 0 30px;
+}
 }
 
 /* move recommended houses under the house details on small devices; style for small devices */
@@ -693,13 +772,14 @@
 @media (max-width: 768px) {
   .house-details{
     flex-direction: column;
+    padding-bottom: 50px;
   }
   .main-house-card, .recommended-houses {
     flex: 100%;
     position: relative; 
   }
   .recommended-houses {
-    flex: 100%;
+    padding-inline: 20px;
   }
   .main-house-card-info {
     border-radius: 40px 40px 0px 0px;
@@ -741,11 +821,46 @@
   .house-actions {
     display: none
   }
+  .recommended {
+    width: 90%;
+    margin: 100px auto 
+  }
+  picture img {
+      padding: 30px 0 0 15px;
+  }
 }
 .main-house-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.recommended-house {
+  background-color: var(--white);
+  position: relative; 
+  margin-bottom: 20px;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px var(--light-grey);
+}
+.recommended-card-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.recommended-card-text p, 
+.recommended-card-text h3 {
+  padding: 0 10px;
+}
+.recommended-card-text img {
+  width: 10px;
+  height: 10px;
+} 
+.recommended-card-info-img {
+  width: 130px;
+  height: 130px;
+  border-radius: 15px;
+  padding: 10px;
 }
 
 /* modal */
@@ -765,10 +880,10 @@
 .modal h3 {
   margin: 0;
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 700;
+  padding-bottom: 20px;
 }
 .modal p {
-  margin: 0;
   text-align: center;
   color: var(--dark-grey);
   line-height: 1.5;
@@ -798,6 +913,10 @@
 }
 .modal-back {
   background-color: var(--dark-grey);
+}
+.modal-second-p {
+  margin-top: -17px;
+  padding-bottom: 20px;
 }
 @media (max-width: 768px) {
   .modal button,
@@ -855,6 +974,18 @@
   }
   .create-header-sm {
     display: none
+  }
+  .back-label {
+    font-size: 16px;
+    font-family: "Montserrat";
+    font-weight: 600;
+    color: var(--black)
+  }
+  .btn-edit-back {
+    gap: 15px;
+  }
+  .create-header-lg {
+    padding: 20px 0;
   }
 }
 .background-wrapper {
@@ -984,7 +1115,7 @@ textarea.error::placeholder {
   color: var(--red);
 }
 /* Large devices */
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   .house-create-wrapper, 
   .house-edit-wraper {
     width: 50%;
@@ -999,7 +1130,7 @@ textarea.error::placeholder {
   }
 }
 /* Small devices */
-@media (max-width: 769px) {
+@media (max-width: 768px) {
   .form-btn-wrapper {
       grid-column: 1 / span 2;
   }

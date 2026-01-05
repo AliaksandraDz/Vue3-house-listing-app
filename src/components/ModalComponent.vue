@@ -3,7 +3,7 @@
       <div class="modal">
         <h3>Delete listing</h3>
         <p>Are you sure you want to delete this listing?</p>
-        <p>This action cannot be undone.</p>
+        <p class="modal-second-p">This action cannot be undone.</p>
   
         <router-link to="/">
           <button

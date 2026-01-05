@@ -112,37 +112,95 @@
       </div>
     </article>
 
-    <div class="recommended-houses">Im Recommended!</div>
+    <div class="recommended-houses">
+      <h2>Recommended for you</h2>
+      <div v-for="recommendedHouse in recommendations" :key="recommendedHouse.id" class="recommended-house">
+          <div class="recommended-card-info" @click="navigateToHouseDetails(recommendedHouse.id)">
+              <img :src="recommendedHouse.image" class="recommended-card-info-img" alt="House Image" />
+              <div class="recommended-card-text">
+                  <h3>{{ recommendedHouse.location.street }} {{ recommendedHouse.location.houseNumber }}</h3>
+                  <p>€ {{ recommendedHouse.price }} </p>
+                  <p>{{ recommendedHouse.location.zip }} {{ recommendedHouse.location.city }}</p>
+                  <p class="recommended-house-meta">
+                    <span class="meta-item">
+                      <img src="../assets/ic_bed@3x.png" alt="Bed" /> {{ recommendedHouse.rooms.bedrooms }}
+                    </span> 
+                    <span class="meta-item">
+                      <img src="../assets/ic_bath@3x.png" alt="Bath" /> {{ recommendedHouse.rooms.bathrooms }}
+                    </span>
+                    <span class="meta-item">
+                      <img src="../assets/ic_size@3x.png" alt="Size" /> {{ recommendedHouse.size }} m2
+                    </span>
+                  </p>
+              </div>
+          </div>
+      </div>
+    </div>
     <ModalComponent v-if="showModal" :house="houseDetails" @close="showModal = false"/>
   </div>
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/stores/store'
 import ModalComponent from '@/components/ModalComponent.vue'
 
 const route = useRoute()
+const router = useRouter()
 const store = useStore()
 
 const houseDetails = ref(null)
 const isLoading = ref(true)
 const showModal = ref(route.query.delete === "true");
+const recommendations = ref([]);
 
-watchEffect(async () => {
-  const idParam = route.params.id
-  if (!idParam) return
 
+const fetchData = async (id) => {
   isLoading.value = true
+
   try {
-    const id = Number(idParam)
-    houseDetails.value = await store.getHouseById(id)
+    // Load houses once (store can cache internally)
+    await store.getHouses()
+
+    const currentHouse = store.houses.find(h => h.id === id)
+    if (!currentHouse) {
+      houseDetails.value = null
+      recommendations.value = []
+      return
+    }
+
+    houseDetails.value = currentHouse
+
+    recommendations.value = store.houses
+      .filter(h => h.id !== id)
+      .map(h => ({
+        ...h,
+        priceDiff: Math.abs(currentHouse.price - h.price)
+      }))
+      .sort((a, b) => a.priceDiff - b.priceDiff)
+      .slice(0, 3)
+
   } catch (err) {
     console.error('Error while fetching house:', err)
     houseDetails.value = null
+    recommendations.value = []
   } finally {
     isLoading.value = false
   }
-})
+}
+
+watch(
+  () => route.params.id,
+  (id) => {
+    if (!id) return
+    fetchData(Number(id))
+  },
+  { immediate: true }
+)
+
+const navigateToHouseDetails = (houseId) => {
+    router.push({ name: 'HouseDetailsView', params: { id: houseId } });
+};
+
 </script>

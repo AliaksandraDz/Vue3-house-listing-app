@@ -9,9 +9,14 @@
           <img
             src="../assets/ic_plus_grey@3x.png"
             alt="Create"
-            class="btn-create-icon"
+            class="btn-create-icon-sm"
           />
-          <span class="btn-create-label">+ Create new</span>
+          <img
+            src="../assets/ic_plus_white@3x.png"
+            alt="Create"
+            class="btn-create-icon-lg"
+          />
+          <span class="btn-create-label">Create new</span>
         </button>
       </router-link>
       </div>
@@ -75,8 +80,8 @@
 
     <!-- list of houses -->
   </section>
-  <div v-for="house in store.filteredHouses" :key="house.id" class="houses-list">
-    <HouseListingComponent :house="house" />
+  <div class="houses-list">
+    <HouseListingComponent v-for="house in store.filteredHouses" :key="house.id" :house="house" />
   </div>
 </template>
 

@@ -29,16 +29,6 @@
           </span>
         </p>
       </div>
-      <!-- <div class="house-card-actions" v-if="house.madeByMe">
-        <router-link
-          :to="{ name: 'HouseEditView', params: { id: house.id }}"
-          class="btn btn-edit">
-            <img class="btn-edit-icon" src="../assets/ic_edit@3x.png" alt="Edit" />
-        </router-link>
-        <button class="btn btn-delete" @click="clickedOnDelete = true">
-            <img class="btn-delete-icon" src="../assets/ic_delete@3x.png" alt="Delete" />
-        </button>
-      </div> -->
     </article>
   </router-link>
 </template>
