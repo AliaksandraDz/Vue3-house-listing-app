@@ -136,7 +136,7 @@
           </div>
       </div>
     </div>
-    <ModalComponent v-if="showModal" :house="houseDetails" @close="showModal = false"/>
+    <ModalComponent v-if="showModal && houseDetails" :house="houseDetails" @close="showModal = false"/>
   </div>
 </template>
 
