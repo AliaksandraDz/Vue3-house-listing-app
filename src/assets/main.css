@@ -44,11 +44,11 @@
   #root, #-next {
     isolation: isolate;
   }
-  
-  /* =========================
-     Color variables
+
+    /* =========================
+     Main
      ========================= */
-  
+     
   :root {
     --black: #000000;
     --dark-grey: #4A4B4C;
@@ -59,10 +59,6 @@
     --soft-white: #F6F6F6;
     --white: #FFFFFF;
   }
-
-  /* =========================
-     Base typography & body
-     ========================= */
   
   body {
     background: var(--soft-white);

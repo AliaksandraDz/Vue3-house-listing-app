@@ -411,7 +411,6 @@ export default {
         form.value.constructionYear = house.constructionYear
         form.value.description = house.description
 
-        // Optional: show existing image as background
         if (house.image && imageWrapper.value) {
           imageWrapper.value.style.backgroundImage = `url(${house.image})`
           imageWrapper.value.style.backgroundSize = 'cover'
