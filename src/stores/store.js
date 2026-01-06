@@ -2,6 +2,17 @@ import { defineStore } from 'pinia';
 import { baseUrl } from '../shared/baseUrl';
 import { apiKey } from '../shared/apiKey';
 
+
+/* =====================================================
+* Main application store
+* ======================================================
+* This Pinia store is responsible for:
+* - Fetching houses from the API
+* - Creating, editing, and deleting houses
+* - Managing search & sorting state
+* - Providing filtered/sorted house lists
+*/
+
 export const useStore = defineStore('store', {
   state: () => ({
     houses: [],

@@ -294,9 +294,25 @@ export default {
   name: 'HouseEditView',
 
   setup() {
+
+    /* -----------------------------------
+    * Router, Route & Store
+    * ------------------------------------
+    * route is used to access route params (house id)
+    * router is used to navigate after successful save
+    * store is used for fetching and updating house data
+    */
+
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
+
+    /* -----------------------------------
+    * Form state
+    * ------------------------------------
+    * Mirrors the house object structure from the API
+    * Used by v-model and Vuelidate
+    */
 
     const form = ref({
       location: {
@@ -317,10 +333,30 @@ export default {
       description: '',
     })
 
+    /* -----------------------------------
+    * General UI state
+    * ------------------------------------
+    * currentYear is used for max validation on construction year
+    * isSubmitting disables submit button while request is running
+    */
+
     const currentYear = new Date().getFullYear()
     const isSubmitting = ref(false)
 
+    /* -----------------------------------
+    * Validation helper
+    * ------------------------------------
+    * Shows errors only after user interaction
+    */
+
     const hasError = (field) => field.$dirty && field.$invalid
+
+    /* -----------------------------------
+    * Custom ZIP code validator
+    * ------------------------------------
+    * Validates Dutch postal codes (e.g. 1234 AB)
+    * Wrapped with helpers to work nicely with Vuelidate
+    */
 
     const zipPattern = helpers.withMessage(
       'Invalid postal code format.',
@@ -332,6 +368,13 @@ export default {
         }
       )
     )
+
+    /* -----------------------------------
+    * Vuelidate rules
+    * ------------------------------------
+    * Mirrors the structure of the form object
+    * Each field contains its own validation rules
+    */
 
     const rules = {
       location: {
@@ -351,19 +394,55 @@ export default {
       description: { required, minLength: minLength(15), maxLength: maxLength(10000) }
     }
 
+    /* -----------------------------------
+    * Initialize Vuelidate
+    * ------------------------------------
+    * v$ contains validation state & helpers
+    */
+
     const v$ = useVuelidate(rules, form)
+
+    /* -----------------------------------
+    * Image handling state
+    * ------------------------------------
+    * image             -> newly selected file
+    * imageWrapper      -> DOM ref for preview background
+    * originalImageUrl  -> existing image from API
+    * hasNewImage       --> tracks if user selected a new image
+    */
 
     const image = ref(null)
     const imageWrapper = ref(null)
     const originalImageUrl = ref(null)
     const hasNewImage = ref(false)
 
-    // true or false
+    /* -----------------------------------
+    * Image presence check
+    * ------------------------------------
+    * Returns true if either:
+    * - a new image is selected
+    * - or an existing image is already present
+    */
+
     const hasImage = computed(() => {
       return !!(image.value || originalImageUrl.value)
     })
 
+    /* -----------------------------------
+    * Image validation
+    * ------------------------------------
+    * Editing requires an image to exist,
+    * but not necessarily a new one
+    */
+
     const imageError = computed(() => !hasImage.value)
+
+    /* -----------------------------------
+    * Handle new image selection
+    * ------------------------------------
+    * Stores file, marks it as new,
+    * and updates preview background
+    */
 
     const handleImageChange = (e) => {
       const file = e.target.files[0]
@@ -380,6 +459,12 @@ export default {
       }
     }
 
+    /* -----------------------------------
+    * Clear image
+    * ------------------------------------
+    * Removes both new and original image
+    */
+
     const clearImage = () => {
       image.value = null
       hasNewImage.value = false
@@ -390,7 +475,13 @@ export default {
       }
     }
 
-    // Load house data
+    /* -----------------------------------
+    * Load existing house data
+    * ------------------------------------
+    * Runs once when component mounts
+    * Fills the form and sets image preview
+    */
+
     onMounted(async () => {
       try {
         const house = await store.getHouseById(route.params.id)
@@ -420,6 +511,16 @@ export default {
         console.error('Failed to load house:', err)
       }
     })
+
+    /* -----------------------------------
+    * Form submission
+    * ------------------------------------
+    * 1. Touch validations
+    * 2. Abort if invalid
+    * 3. Send updated data
+    * 4. Upload image only if changed
+    * 5. Redirect to detail view
+    */
 
     const handleSubmit = async () => {
       v$.value.$touch()

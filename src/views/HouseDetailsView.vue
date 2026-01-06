@@ -146,15 +146,39 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/stores/store'
 import ModalComponent from '@/components/ModalComponent.vue'
 
+/* -----------------------------------
+* Router and Store
+* ------------------------------------
+* route is used to access route params & query (house id, delete flag)
+* router is used for navigation to other house detail pages
+* store is used for holding all houses
+*/
+
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
+
+/* -----------------------------------
+* Reactive state
+* ------------------------------------
+* houseDetails is used for a currently selected house
+* isLoading controls loading UI
+* showModal controls delete confirmation modal
+* recommendations is a list of recommended houses
+*/
 
 const houseDetails = ref(null)
 const isLoading = ref(true)
 const showModal = ref(route.query.delete === "true");
 const recommendations = ref([]);
 
+/* -----------------------------------
+* Fetch house data and recommendations
+* ------------------------------------
+* 1. Fetch all houses (if not already loaded)
+* 2. Find current house by id
+* 3. Generate recommendations based on price similarity
+*/
 
 const fetchData = async (id) => {
   isLoading.value = true
@@ -189,6 +213,14 @@ const fetchData = async (id) => {
     isLoading.value = false
   }
 }
+
+/* -----------------------------------
+* Watch route changes
+* ------------------------------------
+* Re-fetch data when:
+* - user navigates to another house
+* - component is loaded for the first time
+*/
 
 watch(
   () => route.params.id,

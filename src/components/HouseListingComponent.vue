@@ -46,6 +46,16 @@ export default {
   },
 
   setup() {
+
+    /* -----------------------------------
+    * Local state
+    * ------------------------------------
+    * clickedOnDelete →
+    * - Becomes true when delete button is clicked
+    * - Passed as query param to HouseDetailsView
+    * - Used there to auto-open the delete modal
+    */
+
     const clickedOnDelete = ref(false)
 
     return { clickedOnDelete }

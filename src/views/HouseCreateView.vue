@@ -295,8 +295,22 @@ export default {
 
   setup() {
 
+    /* -----------------------------------
+    * Router and Store
+    * ------------------------------------
+    * router is used to navigate after successful submit
+    * store is used to handle API calls (addHouse)
+    */
+
     const router = useRouter()
     const store = useStore()
+
+    /* -----------------------------------
+    * Form state
+    * ------------------------------------
+    * All form fields are grouped into one reactive object
+    * so Vuelidate can validate the full structure.
+    */
 
     const form = ref({
       location: {
@@ -317,10 +331,31 @@ export default {
       description: ''
     })
 
+    /* -----------------------------------
+    * General UI state
+    * ------------------------------------
+    * currentYear is used for max validation on construction year
+    * isSubmitting disables submit button while request is running
+    */
+
     const currentYear = new Date().getFullYear()
     const isSubmitting = ref(false)
 
+    /* -----------------------------------
+    * Validation helper
+    * ------------------------------------
+    * Returns true when a field has been touched AND is invalid
+    * Used to conditionally show error styles/messages
+    */
+
     const hasError = (field) => field.$dirty && field.$invalid
+
+    /* -----------------------------------
+    * Custom ZIP code validator
+    * ------------------------------------
+    * Validates Dutch postal codes (e.g. 1234 AB)
+    * Wrapped with helpers to work nicely with Vuelidate
+    */
 
     const zipPattern = helpers.withMessage(
       'Invalid postal code format.',
@@ -332,6 +367,13 @@ export default {
         }
       )
     )
+
+    /* -----------------------------------
+    * Vuelidate rules
+    * ------------------------------------
+    * Mirrors the structure of the form object
+    * Each field contains its own validation rules
+    */
 
     const rules = {
       location: {
@@ -351,15 +393,41 @@ export default {
       description: { required, minLength: minLength(15), maxLength: maxLength(10000) }
     }
 
+    /* -----------------------------------
+    * Initialize Vuelidate
+    * ------------------------------------
+    * v$ contains validation state & helpers
+    */
+
     const v$ = useVuelidate(rules, form)
+
+    /* -----------------------------------
+    * Image upload state
+    * ------------------------------------
+    * image        -> selected file
+    * imageWrapper -> DOM ref used to show preview background
+    * imageTouched -> tracks whether user interacted with image input
+    */
 
     const image = ref(null)
     const imageWrapper = ref(null)
     const imageTouched = ref(false)
 
+    /* -----------------------------------
+    * Image validation
+    * ------------------------------------
+    * Shows error if user interacted but no image is selected
+    */
+
     const imageError = computed(() => {
       return imageTouched.value && !image.value
     })
+
+    /* -----------------------------------
+    * Handle image selection
+    * ------------------------------------
+    * Stores file and sets preview as background image
+    */
 
     const handleImageChange = (e) => {
       const file = e.target.files[0]
@@ -380,6 +448,12 @@ export default {
       }
     }
 
+    /* -----------------------------------
+    * Clear selected image
+    * ------------------------------------
+    * Resets image state and removes preview
+    */
+
     const clearImage = () => {
       image.value = null
       imageTouched.value = true
@@ -387,6 +461,16 @@ export default {
         imageWrapper.value.style.backgroundImage = ''
       }
     }
+
+    /* -----------------------------------
+    * Form submission
+    * ------------------------------------
+    * 1. Touch all validations
+    * 2. Abort if invalid
+    * 3. Build FormData
+    * 4. Send data to store
+    * 5. Redirect to detail page
+    */
 
     const handleSubmit = async () => {
       v$.value.$touch()
