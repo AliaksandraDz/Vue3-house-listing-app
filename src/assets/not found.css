@@ -9,9 +9,6 @@
     align-items: center;
     padding-top: 50px;
   }
-  .no-results img {
-    height: 180px;
-  }
   .no-results p {
     font-family: "Montserrat";
     font-weight: 500;
@@ -26,11 +23,17 @@
     .no-results p {
       font-size: 14px;
     }
+    .no-results img {
+      height: 140px;
+    }
   }
 
   /* Large devices */
   @media (min-width: 769px) {
     .no-results p {
       font-size: 18px;
+    }
+    .no-results img {
+      height: 180px;
     }
   }
