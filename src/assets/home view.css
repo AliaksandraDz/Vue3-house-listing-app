@@ -110,9 +110,6 @@
     padding: 0;
     cursor: pointer;
   }
-  .search-bar-clear img {
-    width: 18px;
-  }
 
     /* Sort toggle (price / size) */
     .sort-toggle {
