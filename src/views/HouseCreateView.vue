@@ -494,6 +494,7 @@ export default {
         data.append('constructionYear', form.value.constructionYear)
         data.append('hasGarage', form.value.hasGarage)
         data.append('description', form.value.description)
+        data.append('madeByMe', true)
 
         const imageData = new FormData()
         imageData.append('image', image.value)

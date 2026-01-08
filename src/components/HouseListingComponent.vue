@@ -3,7 +3,7 @@
     <article class="house-card">
       <img class="house-card-image" :src="house.image" alt="House"/>
       <div class="house-card-info">
-        <h2 class="house-card-title">{{ house.location.street }} {{ house.location.houseNumber }}
+        <h2 class="house-card-title">{{ house.location.street }} {{ house.location.houseNumber }} {{ house.location?.houseNumberAddition }}
           <div class="house-card-actions" v-if="house.madeByMe">
             <router-link
               :to="{ name: 'HouseEditView', params: { id: house.id }}"
