@@ -118,6 +118,9 @@
     label, input, select, textarea {
       font-size: 14px;
     }
+    .container {
+      padding-top: 80px;
+    }
   }
   
   /* Small devices */
