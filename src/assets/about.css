@@ -18,15 +18,18 @@
 
   /* Large devices */
   @media (min-width: 769px) {
-    .about h1,
+    /* .about h1,
     .about h2,
     .about p,
     .about div {
       padding-inline: 300px;
-    }
-    .about,
+    } */
+    /* .about,
     .about-title {
       padding: 5px 300px;
+      padding: 25px 0;
+    } */
+    .about-title {
       padding: 25px 0;
     }
     .about-logo {

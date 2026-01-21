@@ -126,7 +126,7 @@
     @media (min-width: 769px) {
       .house-details {
         gap: 100px;
-        padding-inline: 300px;
+        /* padding-inline: 300px; */
       }
       .house-actions-sm {
         display: none

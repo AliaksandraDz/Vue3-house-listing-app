@@ -17,6 +17,7 @@
         box-shadow: 0 3px 10px var(--light-grey);
         padding: 20px 24px;
         margin-inline: auto;
+        width: 100%;
       }
     
       .house-card-info h3,
@@ -109,10 +110,10 @@
     
       /* Large devices */
       @media (min-width: 769px) {
-        .houses-list,
+        /* .houses-list,
         .loading {
           padding-inline: 300px;
-        }
+        } */
     
         .house-card {
           padding: 20px 24px;

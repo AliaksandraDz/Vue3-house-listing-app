@@ -8,18 +8,20 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding-inline: 300px;
       }
       
       .nav-header {
         width: 100%;
         display: flex;
         align-items: center;
-        gap: 60px;
+        gap: 70px;
+        max-width: 1300px;
+        padding-inline: 24px;
       }
       
       .nav-header img {
         height: 35px;
+        width: 103px;
       }
       
       .nav-header a {

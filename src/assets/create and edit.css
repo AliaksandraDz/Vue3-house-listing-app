@@ -8,7 +8,7 @@
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    padding: 20px;
+    /* padding: 20px; */
   }
   .btn-clearImage {
     height: 35px;
@@ -156,10 +156,10 @@
     .error-text span {
       font-size: 14px;
     }
-    .house-create,
+    /* .house-create,
     .house-edit {
         padding: 0px 0px 16px 300px;
-      }
+      } */
       .house-create-wrapper,
       .house-edit-wrapper {
         max-width: 500px;

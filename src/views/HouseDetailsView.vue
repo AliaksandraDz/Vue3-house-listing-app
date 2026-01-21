@@ -1,6 +1,6 @@
 <template>
 
-    <div class="house-details main">
+  <div class="house-details main container">
     <!-- Loader -->
     <div v-if="isLoading" class="main-house-card --loading">
       Loading house...

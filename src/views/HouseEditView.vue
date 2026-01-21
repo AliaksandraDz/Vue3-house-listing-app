@@ -1,5 +1,6 @@
 <template>
   <div class="house-edit">
+    <div class="container">
       <div class="house-edit-wrapper">
         <div class="edit-header-row">
           <router-link :to="{ name: 'HouseDetailsView',
@@ -279,6 +280,7 @@
           </div>
         </form>
 
+      </div>
     </div>
   </div>
 </template>
