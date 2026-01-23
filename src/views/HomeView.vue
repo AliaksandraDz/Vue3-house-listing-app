@@ -25,49 +25,8 @@
 
       <!-- Search + sort controls -->
       <div class="houses-controls">
-
-        <!-- Search -->
-        <div class="search-bar">
-          <button class="search-bar-icon" type="button">
-            <img src="../assets/ic_search@3x.png" alt="Search" />
-          </button>
-
-          <input
-            type="text"
-            class="search-bar-input"
-            v-model="store.searchInput"
-            placeholder="Search for a house"
-          />
-
-          <button
-            v-if="store.searchInput.length > 0"
-            class="search-bar-clear"
-            type="button"
-            @click="store.searchInput = ''"
-          >
-            <img src="../assets/ic_clear@3x.png" alt="Clear" />
-          </button>
-        </div>
-
-        <!-- Price / size toggle -->
-        <div class="sort-toggle">
-          <button
-            class="sort-toggle-btn"
-            :class="{ 'sort-toggle-btn--active': store.isActive === 'price' }"
-            @click="store.isActive = 'price'"
-            type="button"
-          >
-            Price
-          </button>
-          <button
-            class="sort-toggle-btn"
-            :class="{ 'sort-toggle-btn--active': store.isActive === 'size' }"
-            @click="store.isActive = 'size'"
-            type="button"
-          >
-            Size
-          </button>
-        </div>
+        <SearchBar v-model="store.searchInput" placeholder="Search for a house" />
+        <SortToggle v-model="store.isActive" />
       </div>
 
       <!-- Results counter -->
@@ -95,27 +54,23 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue'
-import { onMounted } from 'vue';
 import HouseListingComponent from '@/components/HouseListingComponent.vue'
+import SearchBar from '@/components/SearchBar.vue'
+import SortToggle from '@/components/SortToggle.vue'
+
+import { ref } from 'vue'
+import { onMounted } from 'vue';
 import { useStore } from '@/stores/store'
 
 const store = useStore();
 const isLoading = ref(true);
 
-const fetchData = async () => {
-  isLoading.value = true;
+onMounted(async () => {
+  isLoading.value = true
   await store.getHouses()
-  isLoading.value = false;
-}
+  isLoading.value = false
+})
 
-watchEffect(() => {
-  fetchData();
-});
-
-onMounted(() => {
-  store.getHouses();
-});
 </script>
 
 <style scoped>
