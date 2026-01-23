@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
-import { baseUrl } from '../shared/baseUrl';
-import { apiKey } from '../shared/apiKey';
+const BASE_URL = process.env.VUE_APP_API_BASE_URL
+const API_KEY = process.env.VUE_APP_API_KEY
+
 
 
 /* =====================================================
@@ -22,9 +23,9 @@ export const useStore = defineStore('store', {
 
   actions: {
     async getHouses() {
-      const res = await fetch(`${baseUrl}`, {
+      const res = await fetch(`${BASE_URL}`, {
         method: "GET",
-        headers: { "X-Api-Key": apiKey },
+        headers: { "X-Api-Key": API_KEY },
       });
 
       if (!res.ok) {
@@ -37,9 +38,9 @@ export const useStore = defineStore('store', {
     },
 
     async getHouseById(id) {
-      const res = await fetch(`${baseUrl}/${id}`, {
+      const res = await fetch(`${BASE_URL}/${id}`, {
         method: "GET",
-        headers: { "X-Api-Key": apiKey },
+        headers: { "X-Api-Key": API_KEY },
       });
     
       if (!res.ok) {
@@ -51,10 +52,10 @@ export const useStore = defineStore('store', {
     },
 
     async deleteHouse(id) {
-      const res = await fetch(`${baseUrl}/${id}`, {
+      const res = await fetch(`${BASE_URL}/${id}`, {
         method: "DELETE",
         headers: {
-          "X-Api-Key": apiKey
+          "X-Api-Key": API_KEY
         },
       });
           
@@ -69,10 +70,10 @@ export const useStore = defineStore('store', {
 
     async addHouse(houseFormData, imageFormData) {
 
-      const res = await fetch(baseUrl, {
+      const res = await fetch(BASE_URL, {
         method: 'POST',
         headers: {
-          'X-Api-Key': apiKey,
+          'X-Api-Key': API_KEY,
         },
         body: houseFormData,
       })
@@ -93,11 +94,11 @@ export const useStore = defineStore('store', {
 
     
       const imageRes = await fetch(
-        `${baseUrl}/${createdHouse.id}/upload`,
+        `${BASE_URL}/${createdHouse.id}/upload`,
         {
           method: 'POST',
           headers: {
-            'X-Api-Key': apiKey,
+            'X-Api-Key': API_KEY,
           },
           body: imageFormData,
         }
@@ -118,10 +119,10 @@ export const useStore = defineStore('store', {
     },
 
     async editHouse(houseFormData, imageFormData, id) {
-      const res = await fetch(`${baseUrl}/${id}`, {
+      const res = await fetch(`${BASE_URL}/${id}`, {
         method: 'POST',
         headers: {
-          'X-Api-Key': apiKey,
+          'X-Api-Key': API_KEY,
         },
         body: houseFormData,
       })
@@ -131,10 +132,10 @@ export const useStore = defineStore('store', {
       }
     
       if (imageFormData) {
-        const imageRes = await fetch(`${baseUrl}/${id}/upload`, {
+        const imageRes = await fetch(`${BASE_URL}/${id}/upload`, {
           method: 'POST',
           headers: {
-            'X-Api-Key': apiKey,
+            'X-Api-Key': API_KEY,
           },
           body: imageFormData,
         })

@@ -117,3 +117,7 @@ onMounted(() => {
   store.getHouses();
 });
 </script>
+
+<style scoped>
+
+</style>
