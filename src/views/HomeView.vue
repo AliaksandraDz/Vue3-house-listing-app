@@ -73,6 +73,121 @@ onMounted(async () => {
 
 </script>
 
-<style scoped>
+<style>
+
+      .houses-list {
+        margin: 0 auto 25px auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5px;
+      }
+      .houses-page {
+        margin: 32px 0 0 0;
+        display: flex;
+        flex-direction: column;
+      }
+      /* top row: title + create button */
+      .houses-header {
+        display: flex;
+        align-items: stretch;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        width: 100%;
+        margin-inline: auto;
+      }
+      
+      .houses-title {
+        font-weight: 700;
+        margin: 0;
+      }
+      
+      .btn-primary {
+        background-color: var(--red);
+        color: var(--white);
+        border-radius: 7px;
+        padding: 5px 25px;
+        text-transform: uppercase;
+        font-weight: 600;
+        height: 46px;
+      }
+        /* create button icon and label */
+      .btn-create-icon-sm {
+        height: 18px;
+      }
+      
+      .create-button img {
+        display: none;
+      }
+      
+      .btn-create-label {
+        white-space: nowrap;
+        font-weight: 700;
+      }
+      .search-result {
+        width: 100%;
+      }
+        /* Search + toggle row */
+      .houses-controls {
+        display: flex;
+        align-items: stretch;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        width: 100%;
+        margin-inline: auto;
+      }
+      /* Large devices */
+      @media (min-width: 769px) {
+        .btn-primary {
+          font-size: 18px;
+        }
+        .btn-create-icon-sm {
+          display: none;
+        }
+        .search-result {
+          padding-bottom: 20px;
+        }
+      }
+      /* Small devices */
+      @media (max-width: 768px) {
+        .btn-primary {
+          font-size: 12px;
+        }
+        .btn-create-icon-lg {
+          display: none;
+        }
+        .houses-page {
+          width: 100%; 
+        }
+        .houses-title {
+          font-size: 25.6px;
+          text-align: center;
+          flex: 1;
+        }
+        .search-result {
+          width: 100%;
+          padding: 0 20px 20px;
+        }
+        .houses-list,
+        .loading  {
+          padding: 0 0 50px;
+        }
+        .btn-create-label {
+          display: none;
+        }
+      
+        .btn-primary.btn-create {
+          padding: 6.4px 9.6px;
+          border-radius: 50%;
+          background-color: var(--soft-white);
+        }
+      
+        .houses-controls {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 12px;
+          margin: 0;
+          padding: 0 0 20px;
+        }
+      }
 
 </style>

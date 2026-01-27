@@ -14,3 +14,59 @@
     </div>
   </div>
 </template>
+
+<style>
+
+.about-header-sm {
+    font-size: 25.6px;
+  }
+  .about-logo{
+    display: flex; align-items: center;
+  }
+  .about-logo span {
+    padding-left: 15px;
+  }
+  .about-logo span a {
+    text-decoration: none;
+    color: var(--blue);
+  }
+
+  /* Large devices */
+  @media (min-width: 769px) {
+    .about-title {
+      padding: 25px 0;
+    }
+    .about-logo {
+      padding: 20px 0;
+    }
+    .about-logo img {
+      width: 250px;
+      padding-right: 15px;
+    }
+    .about p {
+      padding-bottom: 20px;
+    }
+    .about-header-sm {
+        display: none
+    }
+  }
+
+  /* Small devices */
+  @media (max-width: 768px) {
+    .about h1,
+    .about h2,
+    .about p,
+    .about div {
+      padding: 10px 20px;
+    }
+    .about-header-sm {
+      text-align: center;
+      padding: 25px;
+    }
+    .about-logo img {
+      width: 150px;
+      padding-right: 15px;
+    }
+  }
+
+</style>
