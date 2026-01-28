@@ -15,7 +15,7 @@
             </button>
           </div>
         </h2>
-        <p class="house-card-price">€ {{ house.price }}</p>
+        <p class="house-card-price">€ {{ house.price.toLocaleString('nl-NL') }}</p>
         <p class="house-card-address">{{ house.location.zip }} {{ house.location.city }}</p>
         <p class="house-card-meta">
           <span class="meta-item">

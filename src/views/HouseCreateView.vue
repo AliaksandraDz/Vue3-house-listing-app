@@ -153,7 +153,7 @@ export default {
         bedrooms: { required, minValue: minValue(1) },
         bathrooms: { required, minValue: minValue(1) }
       },
-      constructionYear: { required, minValue: minValue(1700), maxValue: maxValue(currentYear) },
+      constructionYear: { required, minValue: minValue(1950), maxValue: maxValue(currentYear) },
       description: { required, minLength: minLength(15), maxLength: maxLength(10000) }
     }
 

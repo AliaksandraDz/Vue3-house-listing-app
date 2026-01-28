@@ -74,7 +74,7 @@
         <p class="main-house-card-meta">
           <span class="meta-item">
             <img src="../assets/ic_price@3x.png" alt="Price" />
-            {{ houseDetails?.price }}
+            {{ houseDetails?.price?.toLocaleString('nl-NL') }}
           </span>
 
           <span class="meta-item">
@@ -120,7 +120,7 @@
               <div class="recommended-card-text">
                   <h3 class="recommended-house-card-title">{{ recommendedHouse.location.street }}
                     {{ recommendedHouse.location.houseNumber }} {{ recommendedHouse.location?.houseNumberAddition }}</h3>
-                  <p class="recommended-house-card-price">€ {{ recommendedHouse.price }} </p>
+                  <p class="recommended-house-card-price">€ {{ recommendedHouse.price.toLocaleString('nl-NL') }} </p>
                   <p class="recommended-house-card-location">{{ recommendedHouse.location.zip }} {{ recommendedHouse.location.city }}</p>
                   <p class="recommended-house-meta">
                     <span class="meta-item">

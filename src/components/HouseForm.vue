@@ -125,10 +125,10 @@
         <div class="full-size">
             <label>Price*</label>
             <input
-                type="number"
-                :value="form.price"
+                type="text"
+                :value="formattedPrice"
                 placeholder="e.g. €150.000"
-                @input="$emit('update-field', { path: 'price', value: $event.target.value })"
+                @input="onPriceInput"
                 @blur="validation.price.$touch()"
                 :class="{ error: hasError(validation.price) }"
             />
@@ -240,7 +240,7 @@
                 Required field missing.
                 </span>
                 <span v-else-if="validation.constructionYear.minValue.$invalid">
-                Year must be 1700 or later.
+                Year must be 1950 or later.
                 </span>
                 <span v-else-if="validation.constructionYear.maxValue.$invalid">
                 Year cannot be later than {{ currentYear }}.
@@ -310,12 +310,26 @@ export default {
         backgroundPosition: 'center',
       }
     },
+    formattedPrice() {
+        if (!this.form.price) return ''
+
+        return Number(this.form.price).toLocaleString('nl-NL')
+    }
   },
 
   methods: {
     hasError(field) {
       return field.$dirty && field.$invalid
     },
+    onPriceInput(event) {
+    // remove everything except digits
+    const raw = event.target.value.replace(/\D/g, '')
+
+    this.$emit('update-field', {
+      path: 'price',
+      value: raw ? Number(raw) : ''
+    })
+  },
   },
 }
 </script>
