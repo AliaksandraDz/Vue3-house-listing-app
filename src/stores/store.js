@@ -62,6 +62,8 @@ export const useStore = defineStore('store', {
       if (!res.ok) {
         throw new Error(`Failed to delete house ${id}`);
       }
+
+      this.houses = this.houses.filter(house => house.id !== Number(id))
     },
 
     toggleActive(buttonType) {

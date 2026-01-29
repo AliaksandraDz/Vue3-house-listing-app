@@ -43,32 +43,56 @@
     <!-- List of houses -->
     <div v-if="isLoading" class="loading">Loading...</div>
     <div v-else class="houses-list">
-      <HouseListingComponent v-for="house in store.filteredHouses" :key="house.id" :house="house" />
+      <HouseListingComponent v-for="house in store.filteredHouses" :key="house.id" :house="house" @request-delete="openDeleteModal" />
       <div v-show="store.filteredHouses.length === 0" class="no-results">
         <img src="../assets/img_empty_houses@3x.png" alt="No results" />
         <p class="no-results-text">No results found.</p>
         <p>Please try another keyword.</p>
       </div>
     </div>
+    <ModalComponent v-if="showModal && selectedHouse" :house="selectedHouse" @close="showModal = false" />
   </div>
 </template>
 
 <script setup>
-import HouseListingComponent from '@/components/HouseListingComponent.vue'
-import SearchBar from '@/components/SearchBar.vue'
-import SortToggle from '@/components/SortToggle.vue'
+  import HouseListingComponent from '@/components/HouseListingComponent.vue'
+  import SearchBar from '@/components/SearchBar.vue'
+  import SortToggle from '@/components/SortToggle.vue'
+  import ModalComponent from '@/components/ModalComponent.vue'
 
-import { ref } from 'vue'
-import { onMounted } from 'vue';
-import { useStore } from '@/stores/store'
+  import { ref, watch, onMounted } from 'vue'
+  import { useStore } from '@/stores/store'
 
-const store = useStore();
-const isLoading = ref(true);
+  const store = useStore();
+  const isLoading = ref(true);
 
-onMounted(async () => {
-  isLoading.value = true
-  await store.getHouses()
-  isLoading.value = false
+  const showModal = ref(false)
+  const selectedHouse = ref(null)
+
+  const openDeleteModal = (house) => {
+    selectedHouse.value = house
+    showModal.value = true
+  }
+
+  watch(
+    () => store.filteredHouses,
+    (newList) => {
+      if (!showModal.value || !selectedHouse.value) return
+
+      const stillExists = newList.some(h => h.id === selectedHouse.value.id)
+      if (!stillExists) {
+        showModal.value = false
+        selectedHouse.value = null
+      }
+    }
+  )
+
+
+
+  onMounted(async () => {
+    isLoading.value = true
+    await store.getHouses()
+    isLoading.value = false
 })
 
 </script>
