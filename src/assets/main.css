@@ -139,4 +139,7 @@
     a img, button img {
       height:  16px;
     }
+    .container {
+      padding-top: 20px;
+    }
   }

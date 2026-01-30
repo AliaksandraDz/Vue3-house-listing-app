@@ -9,10 +9,6 @@
   background-position: center;
   background-attachment: fixed;
 }
-.house-create-wrapper,
-.house-edit-wrapper {
-  margin-bottom: 60px;
-}
 
 /* Large devices */
 @media (min-width: 769px) {
@@ -49,7 +45,8 @@
   .house-create-wrapper,
   .house-edit-wrapper {
     width: 100%;
-    padding: 0
+    padding: 0;
+    margin-bottom: 60px;
   }
   .back-label {
     display: none;

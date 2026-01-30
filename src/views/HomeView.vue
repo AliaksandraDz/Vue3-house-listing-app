@@ -159,6 +159,25 @@
         width: 100%;
         margin-inline: auto;
       }
+      /* =========================
+        Not found
+      ========================= */
+
+      .no-results {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 50px;
+      }
+      .no-results p {
+        font-family: "Montserrat";
+        font-weight: 500;
+        color: var(--dark-grey)
+      }
+      .no-results-text {
+        padding-top: 40px;
+      }
       /* Large devices */
       @media (min-width: 769px) {
         .btn-primary {
@@ -169,6 +188,12 @@
         }
         .search-result {
           padding-bottom: 20px;
+        }
+        .no-results p {
+          font-size: 18px;
+        }
+        .no-results img {
+          height: 180px;
         }
       }
       /* Small devices */
@@ -211,6 +236,12 @@
           gap: 12px;
           margin: 0;
           padding: 0 0 20px;
+        }
+        .no-results p {
+          font-size: 14px;
+        }
+        .no-results img {
+          height: 140px;
         }
       }
 

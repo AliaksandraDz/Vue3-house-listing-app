@@ -1,11 +1,11 @@
 <template>
   <header>
     <nav class="nav-header">
-      <router-link to="/">
+      <router-link :to="{ name: 'HomeView' }">
         <img alt="logo" src="../assets/img_logo_dtt@3x.png">
       </router-link>
-      <router-link to="/" :class="{ 'router-link-active': isHome }">Houses</router-link>
-      <router-link to="/about" :class="{ 'router-link-active': isAbout }">About</router-link>
+      <router-link :to="{ name: 'HomeView' }" :class="{ 'router-link-active': isHome }">Houses</router-link>
+      <router-link :to="{ name: 'AboutView' }" :class="{ 'router-link-active': isAbout }">About</router-link>
     </nav>
   </header>
 </template>

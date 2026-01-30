@@ -3,7 +3,7 @@
     <div class="container">
       <div class="house-create-wrapper">
         <div class="create-header-row">
-          <router-link to="/" class="btn btn-edit-back">
+          <router-link :to="{ name: 'HomeView' }" class="btn btn-edit-back">
             <img class="btn-create-back-icon" src="../assets/ic_back_grey@3x.png" alt="Back" />
             <p class="back-label">Back to overview</p>
           </router-link>

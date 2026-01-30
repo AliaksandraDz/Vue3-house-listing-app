@@ -14,7 +14,7 @@
     <!-- Only render when data exists -->
     <article v-else class="main-house-card">
 
-    <router-link to="/" class="btn btn-back">
+    <router-link :to="{ name: 'HomeView' }" class="btn btn-back">
       <picture>
           <!-- Small devices -->
           <source srcset="../assets/ic_back_white@3x.png" media="(max-width: 768px)">

@@ -5,7 +5,7 @@
       <p>Are you sure you want to delete this listing?</p>
       <p class="modal-second-p">This action cannot be undone.</p>
 
-      <router-link to="/">
+      <router-link :to="{ name: 'HomeView' }">
         <button
           class="modal-delete"
           @click="handleDelete"
@@ -114,6 +114,10 @@ export default {
 
   /* Small devices */
   @media (max-width: 768px) {
+    .modal {
+      width: 450px;
+      padding: 30px 50px;
+    }
     .modal button,
     .modal a {
       width: 250px;

@@ -1,10 +1,10 @@
 <template>
   <footer>
     <nav class="nav-footer">
-      <router-link to="/" :class="{ 'router-link-exact-active': isHome }">
+      <router-link :to="{ name: 'HomeView' }" :class="{ 'router-link-exact-active': isHome }">
         <img class="btn-home" alt="btn-home">
       </router-link>
-      <router-link to="/about" :class="{ 'router-link-exact-active': isAbout }">
+      <router-link :to="{ name: 'AboutView' }" :class="{ 'router-link-exact-active': isAbout }">
         <img class="btn-about" alt="btn-about">
       </router-link>
     </nav>
