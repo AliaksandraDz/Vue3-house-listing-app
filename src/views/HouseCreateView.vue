@@ -31,289 +31,201 @@
 </template>
 
 <script>
-import HouseForm from '@/components/HouseForm.vue'
-import { ref, computed } from 'vue'
-import { useStore } from '@/stores/store'
-import { useRouter } from 'vue-router'
-import useVuelidate from '@vuelidate/core'
-import { required, minLength, maxLength, minValue, maxValue, helpers } from '@vuelidate/validators'
+  import HouseForm from '@/components/HouseForm.vue'
+  import { ref, computed } from 'vue'
+  import { useStore } from '@/stores/store'
+  import { useRouter } from 'vue-router'
+  import useVuelidate from '@vuelidate/core'
+  import { required, minLength, maxLength, minValue, maxValue, helpers } from '@vuelidate/validators'
 
 
-export default {
-  name: 'HouseCreateView',
+  export default {
+    name: 'HouseCreateView',
 
-  components: {
-    HouseForm
-  },
+    components: {
+      HouseForm
+    },
 
-  setup() {
+    setup() {
+      const router = useRouter()
+      const store = useStore()
 
-    /* -----------------------------------
-    * Router and Store
-    * ------------------------------------
-    * router is used to navigate after successful submit
-    * store is used to handle API calls (addHouse)
-    */
+      const form = ref({
+        location: {
+          street: '',
+          houseNumber: '',
+          houseNumberAddition: '',
+          zip: '',
+          city: ''
+        },
+        price: '',
+        size: '',
+        hasGarage: '',
+        rooms: {
+          bedrooms: '',
+          bathrooms: ''
+        },
+        constructionYear: '',
+        description: ''
+      })
 
-    const router = useRouter()
-    const store = useStore()
+      // Updates deeply nested fields dynamically
+      const updateField = ({ path, value }) => {
+        const keys = path.split('.')
+        let target = form.value
 
-    /* -----------------------------------
-    * Form state
-    * ------------------------------------
-    * All form fields are grouped into one reactive object
-    * so Vuelidate can validate the full structure.
-    */
+        for (let i = 0; i < keys.length - 1; i++) {
+          target = target[keys[i]]
+        }
 
-    const form = ref({
-      location: {
-        street: '',
-        houseNumber: '',
-        houseNumberAddition: '',
-        zip: '',
-        city: ''
-      },
-      price: '',
-      size: '',
-      hasGarage: '',
-      rooms: {
-        bedrooms: '',
-        bathrooms: ''
-      },
-      constructionYear: '',
-      description: ''
-    })
-
-    const updateField = ({ path, value }) => {
-      const keys = path.split('.')
-      let target = form.value
-
-      for (let i = 0; i < keys.length - 1; i++) {
-        target = target[keys[i]]
+        target[keys[keys.length - 1]] = value
       }
 
-      target[keys[keys.length - 1]] = value
-    }
+      // currentYear is used for max validation on construction year
+      const currentYear = new Date().getFullYear()
 
-    /* -----------------------------------
-    * General UI state
-    * ------------------------------------
-    * currentYear is used for max validation on construction year
-    * isSubmitting disables submit button while request is running
-    */
+      // Disables submit button while request is running
+      const isSubmitting = ref(false)
 
-    const currentYear = new Date().getFullYear()
-    const isSubmitting = ref(false)
-
-    /* -----------------------------------
-    * Validation helper
-    * ------------------------------------
-    * Returns true when a field has been touched AND is invalid
-    * Used to conditionally show error styles/messages
-    */
-
-    // const hasError = (field) => field.$dirty && field.$invalid
-
-    /* -----------------------------------
-    * Custom ZIP code validator
-    * ------------------------------------
-    * Validates Dutch postal codes (e.g. 1234 AB)
-    * Wrapped with helpers to work nicely with Vuelidate
-    */
-
-    const zipPattern = helpers.withMessage(
-      'Invalid postal code format.',
-      helpers.withParams(
-        { type: 'zipPattern' },
-        (value) => {
-          if (!value) return true
-          return /^[1-9][0-9]{3} ?(?!sa|SA|sd|SD|ss|SS)[a-zA-Z]{2}$/.test(value)
-        }
+      // Validates Dutch postal codes
+      const zipPattern = helpers.withMessage(
+        'Invalid postal code format.',
+        helpers.withParams(
+          { type: 'zipPattern' },
+          (value) => {
+            if (!value) return true
+            return /^[1-9][0-9]{3} ?(?!sa|SA|sd|SD|ss|SS)[a-zA-Z]{2}$/.test(value)
+          }
+        )
       )
-    )
 
-    /* -----------------------------------
-    * Vuelidate rules
-    * ------------------------------------
-    * Mirrors the structure of the form object
-    * Each field contains its own validation rules
-    */
+      /* -----------------------------------
+      * Vuelidate rules
+      * ------------------------------------
+      * Mirrors the structure of the form object
+      * Each field contains its own validation rules
+      */
 
-    const rules = {
-      location: {
-        street: { required, minLength: minLength(2), maxLength: maxLength(50) },
-        houseNumber: { required, minValue: minValue(1) },
-        zip: { required, zipPattern, minLength: minLength(6), maxLength: maxLength(7) },
-        city: { required, minLength: minLength(2), maxLength: maxLength(50) }
-      },
-      price: { required },
-      size: { required, minValue: minValue(10) },
-      hasGarage: { required },
-      rooms: {
-        bedrooms: { required, minValue: minValue(1) },
-        bathrooms: { required, minValue: minValue(1) }
-      },
-      constructionYear: { required, minValue: minValue(1950), maxValue: maxValue(currentYear) },
-      description: { required, minLength: minLength(15), maxLength: maxLength(10000) }
-    }
+      const rules = {
+        location: {
+          street: { required, minLength: minLength(2), maxLength: maxLength(50) },
+          houseNumber: { required, minValue: minValue(1) },
+          zip: { required, zipPattern, minLength: minLength(6), maxLength: maxLength(7) },
+          city: { required, minLength: minLength(2), maxLength: maxLength(50) }
+        },
+        price: { required },
+        size: { required, minValue: minValue(10) },
+        hasGarage: { required },
+        rooms: {
+          bedrooms: { required, minValue: minValue(1) },
+          bathrooms: { required, minValue: minValue(1) }
+        },
+        constructionYear: { required, minValue: minValue(1950), maxValue: maxValue(currentYear) },
+        description: { required, minLength: minLength(15), maxLength: maxLength(10000) }
+      }
 
-    /* -----------------------------------
-    * Initialize Vuelidate
-    * ------------------------------------
-    * v$ contains validation state & helpers
-    */
+      const v$ = useVuelidate(rules, form)
 
-    const v$ = useVuelidate(rules, form)
+      // Stores the selected image file
+      const imageFile = ref(null)
+      // Tracks if the user interacted with the image input
+      const imageTouched = ref(false)
+      // Temporary URL used to show image preview
+      const imagePreviewUrl = ref('')
 
-    /* -----------------------------------
-    * Image upload state
-    * ------------------------------------
-    * image        -> selected file
-    * imageWrapper -> DOM ref used to show preview background
-    * imageTouched -> tracks whether user interacted with image input
-    */
+      // True if an image is currently selected
+      const hasImage = computed(() => !!imageFile.value)
 
-    // const image = ref(null)
-    // const imageWrapper = ref(null)
-    
-    const imageFile = ref(null)
-    const imageTouched = ref(false)
-    const imagePreviewUrl = ref('')
+      // True if user interacted but no image is selected
+      const imageError = computed(() => {
+        return imageTouched.value && !imageFile.value
+      })
 
-    const hasImage = computed(() => !!imageFile.value)
+      // Stores the selected file and generates a preview URL
+      const onImageChange = (event) => {
+        imageTouched.value = true
+        const file = event.target.files?.[0]
 
-    /* -----------------------------------
-    * Image validation
-    * ------------------------------------
-    * Shows error if user interacted but no image is selected
-    */
+        if (!file) {
+          imageFile.value = null
+          imagePreviewUrl.value = ''
+          return
+        }
 
-    const imageError = computed(() => {
-      return imageTouched.value && !imageFile.value
-    })
+        imageFile.value = file
+        imagePreviewUrl.value = URL.createObjectURL(file)
+      }
 
-    const onImageChange = (event) => {
-      imageTouched.value = true
-      const file = event.target.files?.[0]
-
-      if (!file) {
+      // Resets image state and removes preview
+      const onImageClear = () => {
+        imageTouched.value = true
         imageFile.value = null
         imagePreviewUrl.value = ''
-        return
       }
 
-      imageFile.value = file
-      imagePreviewUrl.value = URL.createObjectURL(file)
-    }
+      /* -----------------------------------
+      * Form submission
+      * ------------------------------------
+      * 1. Touch all validations
+      * 2. Abort if invalid
+      * 3. Build FormData
+      * 4. Send data to store
+      * 5. Redirect to detail page
+      */
 
-    const onImageClear = () => {
-      imageTouched.value = true
-      imageFile.value = null
-      imagePreviewUrl.value = ''
-    }
+      const handleSubmit = async () => {
+        v$.value.$touch()
+        imageTouched.value = true
 
-    /* -----------------------------------
-    * Handle image selection
-    * ------------------------------------
-    * Stores file and sets preview as background image
-    */
+        if (v$.value.$invalid || imageError.value) return
 
-    // const handleImageChange = (e) => {
-    //   const file = e.target.files[0]
+        isSubmitting.value = true
 
-    //   imageTouched.value = true
+        try {
+          const data = new FormData()
+          data.append('price', form.value.price)
+          data.append('bedrooms', form.value.rooms.bedrooms)
+          data.append('bathrooms', form.value.rooms.bathrooms)
+          data.append('size', form.value.size)
+          data.append('streetName', form.value.location.street)
+          data.append('houseNumber', form.value.location.houseNumber)
+          data.append('numberAddition', form.value.location.houseNumberAddition)
+          data.append('zip', form.value.location.zip)
+          data.append('city', form.value.location.city)
+          data.append('constructionYear', form.value.constructionYear)
+          data.append('hasGarage', String(form.value.hasGarage))
+          data.append('description', form.value.description)
+          data.append('madeByMe', true)
 
-    //   if (!file) {
-    //     image.value = null
-    //     return
-    //   }
+          const imageData = new FormData()
+          imageData.append('image', imageFile.value)
 
-    //   image.value = file
+          const createdHouse = await store.addHouse(data, imageData)
 
-    //   if (imageWrapper.value) {
-    //     imageWrapper.value.style.backgroundImage =
-    //       `url(${URL.createObjectURL(file)})`
-    //     imageWrapper.value.style.backgroundSize = 'cover'
-    //   }
-    // }
-
-    /* -----------------------------------
-    * Clear selected image
-    * ------------------------------------
-    * Resets image state and removes preview
-    */
-
-    // const clearImage = () => {
-    //   image.value = null
-    //   imageTouched.value = true
-    //   if (imageWrapper.value) {
-    //     imageWrapper.value.style.backgroundImage = ''
-    //   }
-    // }
-
-    /* -----------------------------------
-    * Form submission
-    * ------------------------------------
-    * 1. Touch all validations
-    * 2. Abort if invalid
-    * 3. Build FormData
-    * 4. Send data to store
-    * 5. Redirect to detail page
-    */
-
-    const handleSubmit = async () => {
-      v$.value.$touch()
-      imageTouched.value = true
-
-      if (v$.value.$invalid || imageError.value) return
-
-      isSubmitting.value = true
-
-      try {
-        const data = new FormData()
-        data.append('price', form.value.price)
-        data.append('bedrooms', form.value.rooms.bedrooms)
-        data.append('bathrooms', form.value.rooms.bathrooms)
-        data.append('size', form.value.size)
-        data.append('streetName', form.value.location.street)
-        data.append('houseNumber', form.value.location.houseNumber)
-        data.append('numberAddition', form.value.location.houseNumberAddition)
-        data.append('zip', form.value.location.zip)
-        data.append('city', form.value.location.city)
-        data.append('constructionYear', form.value.constructionYear)
-        data.append('hasGarage', String(form.value.hasGarage))
-        data.append('description', form.value.description)
-        data.append('madeByMe', true)
-
-        const imageData = new FormData()
-        imageData.append('image', imageFile.value)
-
-        const createdHouse = await store.addHouse(data, imageData)
-
-        router.push({
-            name: 'HouseDetailsView',
-            params: { id: createdHouse.id }
-        })
-      } catch (err) {
-        console.error('Create house failed:', err)
-      } finally {
-        isSubmitting.value = false
+          router.push({
+              name: 'HouseDetailsView',
+              params: { id: createdHouse.id }
+          })
+        } catch (err) {
+          console.error('Create house failed:', err)
+        } finally {
+          isSubmitting.value = false
+        }
       }
-    }
 
-    return {
-      form,
-      hasImage,
-      imageError,
-      imagePreviewUrl,
-      onImageChange,
-      onImageClear,
-      handleSubmit,
-      currentYear,
-      isSubmitting,
-      v$,
-      updateField
+      return {
+        form,
+        hasImage,
+        imageError,
+        imagePreviewUrl,
+        onImageChange,
+        onImageClear,
+        handleSubmit,
+        currentYear,
+        isSubmitting,
+        v$,
+        updateField
+      }
     }
   }
-}
 </script>

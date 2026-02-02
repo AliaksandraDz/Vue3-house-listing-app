@@ -4,20 +4,12 @@
       <h3>Delete listing</h3>
       <p>Are you sure you want to delete this listing?</p>
       <p class="modal-second-p">This action cannot be undone.</p>
-
       <router-link :to="{ name: 'HomeView' }">
-        <button
-          class="modal-delete"
-          @click="handleDelete"
-        >
+        <button class="modal-delete" @click="handleDelete">
           Yes, delete
         </button>
       </router-link>
-
-      <button
-        class="modal-back"
-        @click="emitClose"
-      >
+      <button class="modal-back" @click="emitClose">
         Go back
       </button>
     </div>
@@ -34,20 +26,18 @@ export default {
       required: true
     }
   },
-  emits: ['close'],
 
+  emits: ['close'],
+  
   setup(props, { emit }) {
     const store = useStore()
-
     const handleDelete = () => {
       store.deleteHouse(props.house.id)
       emit('close')
     }
-
     const emitClose = () => {
       emit('close')
     }
-
     return {
       handleDelete,
       emitClose
@@ -57,13 +47,11 @@ export default {
 </script>
 
 <style>
-
   .modal {
     width: 600px;
     padding: 40px 50px;
     background: var(--white);
     border-radius: 10px;
-  
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,7 +73,6 @@ export default {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
-  
     display: flex;
     justify-content: center;
     align-items: center;
@@ -111,7 +98,6 @@ export default {
     margin-top: -17px;
     padding-bottom: 20px;
   }
-
   /* Small devices */
   @media (max-width: 768px) {
     .modal {
@@ -123,6 +109,5 @@ export default {
       width: 250px;
     }
   }
-
 </style>
   

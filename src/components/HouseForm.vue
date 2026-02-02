@@ -14,13 +14,13 @@
 
             <p v-if="hasError(validation.location.street)" class="error-text">
                 <span v-if="validation.location.street.required.$invalid">
-                Required field missing.
+                    Required field missing.
                 </span>
                 <span v-else-if="validation.location.street.minLength.$invalid">
-                Street must be at least 2 characters long.
+                    Street must be at least 2 characters long.
                 </span>
                 <span v-else-if="validation.location.street.maxLength.$invalid">
-                Street cannot be longer than 50 characters.
+                    Street cannot be longer than 50 characters.
                 </span>
             </p>
         </div>
@@ -39,10 +39,10 @@
 
             <p v-if="hasError(validation.location.houseNumber)" class="error-text">
                 <span v-if="validation.location.houseNumber.required.$invalid">
-                Required field missing.
+                    Required field missing.
                 </span>
                 <span v-else-if="validation.location.houseNumber.minValue.$invalid">
-                House number must be at least 1.
+                    House number must be at least 1.
                 </span>
             </p>
         </div>
@@ -90,13 +90,13 @@
 
             <p v-if="hasError(validation.location.city)" class="error-text">
                 <span v-if="validation.location.city.required.$invalid">
-                Required field missing.
+                    Required field missing.
                 </span>
                 <span v-else-if="validation.location.city.minLength.$invalid">
-                City must be at least 2 characters long.
+                    City must be at least 2 characters long.
                 </span>
                 <span v-else-if="validation.location.city.maxLength.$invalid">
-                City cannot be longer than 50 characters.
+                    City cannot be longer than 50 characters.
                 </span>
             </p>
         </div>
@@ -109,12 +109,12 @@
                 <input type="file" accept="image/png, image/jpeg" @change="$emit('image-change', $event)" />
 
                 <button
-                v-if="hasImage"
-                class="clear-button-white"
-                type="button"
-                @click="$emit('image-clear')"
-                >
-                <img class="btn-clearImage" src="../assets/ic_clear_white@3x.png" alt="Clear" />
+                    v-if="hasImage"
+                    class="clear-button-white"
+                    type="button"
+                    @click="$emit('image-clear')"
+                    >
+                    <img class="btn-clearImage" src="../assets/ic_clear_white@3x.png" alt="Clear" />
                 </button>
             </div>
 
@@ -152,10 +152,10 @@
 
             <p v-if="hasError(validation.size)" class="error-text">
                 <span v-if="validation.size.required.$invalid">
-                Required field missing.
+                    Required field missing.
                 </span>
                 <span v-else-if="validation.size.minValue.$invalid">
-                Size must be at least 10 m2.
+                    Size must be at least 10 m2.
                 </span>
             </p>
         </div>
@@ -194,10 +194,10 @@
 
             <p v-if="hasError(validation.rooms.bedrooms)" class="error-text">
                 <span v-if="validation.rooms.bedrooms.required.$invalid">
-                Required field missing.
+                    Required field missing.
                 </span>
                 <span v-else-if="validation.rooms.bedrooms.minValue.$invalid">
-                Number of bedrooms must be at least 1.
+                    Number of bedrooms must be at least 1.
                 </span>
             </p>
         </div>
@@ -215,10 +215,10 @@
 
             <p v-if="hasError(validation.rooms.bathrooms)" class="error-text">
                 <span v-if="validation.rooms.bathrooms.required.$invalid">
-                Required field missing.
+                    Required field missing.
                 </span>
                 <span v-else-if="validation.rooms.bathrooms.minValue.$invalid">
-                Number of bathrooms must be at least 1.
+                    Number of bathrooms must be at least 1.
                 </span>
             </p>
         </div>
@@ -237,13 +237,13 @@
 
             <p v-if="hasError(validation.constructionYear)" class="error-text">
                 <span v-if="validation.constructionYear.required.$invalid">
-                Required field missing.
+                    Required field missing.
                 </span>
                 <span v-else-if="validation.constructionYear.minValue.$invalid">
-                Year must be 1950 or later.
+                    Year must be 1950 or later.
                 </span>
                 <span v-else-if="validation.constructionYear.maxValue.$invalid">
-                Year cannot be later than {{ currentYear }}.
+                    Year cannot be later than {{ currentYear }}.
                 </span>
             </p>
         </div>
@@ -262,13 +262,13 @@
 
             <p v-if="hasError(validation.description)" class="error-text">
                 <span v-if="validation.description.required.$invalid">
-                Required field missing.
+                    Required field missing.
                 </span>
                 <span v-else-if="validation.description.minLength.$invalid">
-                Description must be at least 15 characters long.
+                    Description must be at least 15 characters long.
                 </span>
                 <span v-else-if="validation.description.maxLength.$invalid">
-                Description cannot be longer than 10000 characters.
+                    Description cannot be longer than 10000 characters.
                 </span>
             </p>
         </div>
@@ -302,6 +302,7 @@ export default {
   emits: ['submit', 'image-change', 'image-clear', 'update-field'],
 
   computed: {
+    // Updates preview background for image selection
     imagePreviewStyle() {
       if (!this.imagePreviewUrl) return {}
       return {
@@ -310,21 +311,21 @@ export default {
         backgroundPosition: 'center',
       }
     },
+    // Formats the currency values with a thousand separator
     formattedPrice() {
         if (!this.form.price) return ''
-
         return Number(this.form.price).toLocaleString('nl-NL')
     }
   },
 
   methods: {
+    // Shows errors only after user interaction
     hasError(field) {
       return field.$dirty && field.$invalid
     },
+    // Removes everything except digits
     onPriceInput(event) {
-    // remove everything except digits
     const raw = event.target.value.replace(/\D/g, '')
-
     this.$emit('update-field', {
       path: 'price',
       value: raw ? Number(raw) : ''
@@ -335,7 +336,6 @@ export default {
 </script>
 
 <style>
-
     .btn-clearImage {
         height: 35px;
     }
@@ -392,14 +392,14 @@ export default {
         width: 100%;
     }
     .clear-button-white {
-    position: absolute;
-    top: 5px;
-    left: 130px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    border: none;
-    padding: 0;
-    background-color: transparent;
+        position: absolute;
+        top: 5px;
+        left: 130px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        border: none;
+        padding: 0;
+        background-color: transparent;
     }
     .clear-button-white img {
         max-width: 35px;
@@ -417,16 +417,16 @@ export default {
         padding: 5px 0px;
     }
     .submit-form-button {
-    border: none;
-    color: var(--white);
-    text-align: center;
-    text-decoration: none;
-    padding: 12px 0;
-    width: 100%;
-    border-radius: 7px;
-    text-transform: uppercase;
-    background-color: var(--red);
-    cursor: pointer;
+        border: none;
+        color: var(--white);
+        text-align: center;
+        text-decoration: none;
+        padding: 12px 0;
+        width: 100%;
+        border-radius: 7px;
+        text-transform: uppercase;
+        background-color: var(--red);
+        cursor: pointer;
     }
     .submit-form-button:disabled {
         cursor: not-allowed;
@@ -457,12 +457,12 @@ export default {
     /* Large devices */
     @media (min-width: 769px) {
         .form-btn-wrapper {
-        grid-column-start: 2;
-        grid-column-end: 2;
+            grid-column-start: 2;
+            grid-column-end: 2;
         }
         .error-text,
         .error-text span {
-        font-size: 14px;
+            font-size: 14px;
         }
     }
     /* Small devices */
@@ -472,21 +472,18 @@ export default {
         }
         .error-text,
         .error-text span {
-          font-size: 12px;
+            font-size: 12px;
         }
     }
     /* Hide arrows */
-
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+        -webkit-appearance: none;
+        margin: 0;
     }
-    
     /* Firefox */
     input[type=number] {
-    -moz-appearance: textfield;
+        -moz-appearance: textfield;
     }
-
 </style>

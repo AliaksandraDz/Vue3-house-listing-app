@@ -16,9 +16,8 @@
 </template>
 
 <style>
-
-.about-header-sm {
-    font-size: 25.6px;
+  .about-header-sm {
+    font-size: 26px;
   }
   .about-logo{
     display: flex; align-items: center;
@@ -30,7 +29,6 @@
     text-decoration: none;
     color: var(--blue);
   }
-
   /* Large devices */
   @media (min-width: 769px) {
     .about-title {
@@ -50,7 +48,6 @@
         display: none
     }
   }
-
   /* Small devices */
   @media (max-width: 768px) {
     .about h1,
@@ -68,5 +65,4 @@
       padding-right: 15px;
     }
   }
-
 </style>

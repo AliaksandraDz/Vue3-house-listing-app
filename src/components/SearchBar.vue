@@ -1,9 +1,8 @@
 <template>
     <div class="search-bar">
         <button class="search-bar-icon" type="button">
-            <img src="../assets/ic_search@3x.png" alt="Search" />
+            <img src="../assets/ic_search@3x.png" alt="Search"/>
         </button>
-
         <input
             type="text"
             class="search-bar-input"
@@ -11,7 +10,6 @@
             placeholder="Search for a house"
             @input="$emit('update:modelValue', $event.target.value)"
         />
-
         <button
             v-if="modelValue.length > 0"
             class="search-bar-clear"
@@ -24,29 +22,26 @@
 </template>
 
 <script>
-export default {
-    name: 'SearchBar',
+  export default {
+      name: 'SearchBar',
 
-    props: {
-        modelValue: {
-            type: String,
-            required: true
-        }
-    },
-
-    emits: ['update:modelValue']
-}
+      props: {
+          modelValue: {
+              type: String,
+              required: true
+          }
+      },
+      
+      emits: ['update:modelValue']
+  }
 </script>  
 
 <style>
-
-  /* Search bar */
   .search-bar {
     position: relative;
     flex: 1;
     max-width: 500px;
   }
-  
   .search-bar-input {
     width: 100%;
     height: 46px;
@@ -59,12 +54,9 @@ export default {
     font-size: 16px;
     outline: none;
   }
-  
   .search-bar-input::placeholder {
     color: var(--grey);
   }
-  
-  /* Search button */
   .search-bar-icon {
     position: absolute;
     left: 17px;
@@ -78,8 +70,6 @@ export default {
     width: 18px;
     height: 18px;
   }
-  
-  /* Clear button */
   .search-bar-clear {
     position: absolute;
     right: 15px;
@@ -103,5 +93,4 @@ export default {
       max-width: none;
     }
   }
-
 </style>

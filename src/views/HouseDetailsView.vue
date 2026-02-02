@@ -142,305 +142,273 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useStore } from '@/stores/store'
-import ModalComponent from '@/components/ModalComponent.vue'
+  import { ref, watch } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import { useStore } from '@/stores/store'
+  import ModalComponent from '@/components/ModalComponent.vue'
 
-/* -----------------------------------
-* Router and Store
-* ------------------------------------
-* route is used to access route params & query (house id, delete flag)
-* router is used for navigation to other house detail pages
-* store is used for holding all houses
-*/
+  const route = useRoute()
+  const router = useRouter()
+  const store = useStore()
 
-const route = useRoute()
-const router = useRouter()
-const store = useStore()
+  // houseDetails is used for a currently selected house
+  const houseDetails = ref(null)
+  // controls loading UI
+  const isLoading = ref(true)
+  // showModal controls delete confirmation modal
+  const showModal = ref(route.query.delete === "true");
+  // recommendations is a list of recommended houses
+  const recommendations = ref([]);
 
-/* -----------------------------------
-* Reactive state
-* ------------------------------------
-* houseDetails is used for a currently selected house
-* isLoading controls loading UI
-* showModal controls delete confirmation modal
-* recommendations is a list of recommended houses
-*/
+  /* -----------------------------------
+  * Fetch house data and recommendations
+  * ------------------------------------
+  * 1. Fetch all houses (if not already loaded)
+  * 2. Find current house by id
+  * 3. Generate recommendations based on price similarity
+  */
 
-const houseDetails = ref(null)
-const isLoading = ref(true)
-const showModal = ref(route.query.delete === "true");
-const recommendations = ref([]);
+  const fetchData = async (id) => {
+    isLoading.value = true
 
-/* -----------------------------------
-* Fetch house data and recommendations
-* ------------------------------------
-* 1. Fetch all houses (if not already loaded)
-* 2. Find current house by id
-* 3. Generate recommendations based on price similarity
-*/
+    try {
 
-const fetchData = async (id) => {
-  isLoading.value = true
+      await store.getHouses()
 
-  try {
+      const currentHouse = store.houses.find(h => h.id === id)
+      if (!currentHouse) {
+        houseDetails.value = null
+        recommendations.value = []
+        return
+      }
 
-    await store.getHouses()
+      houseDetails.value = currentHouse
 
-    const currentHouse = store.houses.find(h => h.id === id)
-    if (!currentHouse) {
+      recommendations.value = store.houses
+        .filter(h => h.id !== id)
+        .map(h => ({
+          ...h,
+          priceDiff: Math.abs(currentHouse.price - h.price)
+        }))
+        .sort((a, b) => a.priceDiff - b.priceDiff)
+        .slice(0, 3)
+
+    } catch (err) {
+      console.error('Error while fetching house:', err)
       houseDetails.value = null
       recommendations.value = []
-      return
+    } finally {
+      isLoading.value = false
     }
-
-    houseDetails.value = currentHouse
-
-    recommendations.value = store.houses
-      .filter(h => h.id !== id)
-      .map(h => ({
-        ...h,
-        priceDiff: Math.abs(currentHouse.price - h.price)
-      }))
-      .sort((a, b) => a.priceDiff - b.priceDiff)
-      .slice(0, 3)
-
-  } catch (err) {
-    console.error('Error while fetching house:', err)
-    houseDetails.value = null
-    recommendations.value = []
-  } finally {
-    isLoading.value = false
   }
-}
 
-/* -----------------------------------
-* Watch route changes
-* ------------------------------------
-* Re-fetch data when:
-* - user navigates to another house
-* - component is loaded for the first time
-*/
+  /* -----------------------------------
+  * Watch route changes
+  * ------------------------------------
+  * Re-fetch data when:
+  * - user navigates to another house
+  * - component is loaded for the first time
+  */
 
-watch(
-  () => route.params.id,
-  (id) => {
-    if (!id) return
-    fetchData(Number(id))
-  },
-  { immediate: true }
-)
+  watch(
+    () => route.params.id,
+    (id) => {
+      if (!id) return
+      fetchData(Number(id))
+    },
+    { immediate: true }
+  )
 
-const navigateToHouseDetails = (houseId) => {
-    router.push({ name: 'HouseDetailsView', params: { id: houseId } });
-};
-
+  const navigateToHouseDetails = (houseId) => {
+      router.push({ name: 'HouseDetailsView', params: { id: houseId } });
+  };
 </script>
 
 <style scoped>
-
-    .house-details {
-      display: flex;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-    
-    .main-house-card {
-      flex: 1 1 50%;
-      box-sizing: border-box;
-    }
-    
-    .recommended-houses {
-      flex: 1 1 20%;
-      box-sizing: border-box;
-      margin-top: 76px;
-    }
-    .recommended-houses h2 {
-      padding-bottom: 15px;
-    }
-    
-    .recommended-house-meta {
-      display: flex;
-      font-size: 15px;
-      padding-top: 7px;
-      gap: 20px;
-      color: var(--dark-grey);
-    }
-    
-    .recommended-house-card-title {
-      font-size: 15px;
-      color: var(--black);
-      font-weight: 700;
-    }
-    
-    .recommended-house-card-price {
-      font-size: 15px;
-      color: var(--dark-grey);
-      font-weight: 600;
-    }
-    
-    .recommended-house-card-location {
-      font-size: 15px;
-      color: var(--grey);
-      font-weight: 500;
-    }
-    
-    .main-house-card-image {
-      object-fit: cover;
-      flex-shrink: 0;
-      margin-right: 28px;
-      z-index: -1;
+  .house-details {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .main-house-card {
+    flex: 1 1 50%;
+    box-sizing: border-box;
+  }
+  .recommended-houses {
+    flex: 1 1 20%;
+    box-sizing: border-box;
+    margin-top: 76px;
+  }
+  .recommended-houses h2 {
+    padding-bottom: 15px;
+  }
+  .recommended-house-meta {
+    display: flex;
+    font-size: 15px;
+    padding-top: 7px;
+    gap: 20px;
+    color: var(--dark-grey);
+  }
+  .recommended-house-card-title {
+    font-size: 15px;
+    color: var(--black);
+    font-weight: 700;
+  }
+  .recommended-house-card-price {
+    font-size: 15px;
+    color: var(--dark-grey);
+    font-weight: 600;
+  }
+  .recommended-house-card-location {
+    font-size: 15px;
+    color: var(--grey);
+    font-weight: 500;
+  }
+  .main-house-card-image {
+    object-fit: cover;
+    flex-shrink: 0;
+    margin-right: 28px;
+    z-index: -1;
+    width: 100%;
+  }
+  .main-house-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    padding: 30px;
+    background-color: var(--white);
+  }
+  .main-house-card-info p {
+    color: var(--dark-grey);
+  }
+  .main-house-card-price {
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .main-house-card-address {
+    margin-bottom: 12px;
+  }
+  .main-house-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 14.4px;
+    font-weight: 600;
+  }
+  .main-house-card-description {
+    padding-top: 10px;
+  }
+  .btn-back {
+    background-color: transparent;
+    padding: 30px 0;
+  }
+  .btn-delete, .btn-edit {
+    background-color: transparent;
+    padding: 0 0 0 10px;
+  }
+  .main-house-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .recommended-house {
+    background-color: var(--white);
+    position: relative; 
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px var(--light-grey);
+  }
+  .recommended-card-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .recommended-card-info-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 15px;
+    padding: 10px;
+  }
+  /* Large devices */
+  @media (min-width: 769px) {
+    .main {
       width: 100%;
+      max-width: 1300px;
+      margin-inline: auto;
+      padding-inline: 24px;
+      padding-top: 70px;
     }
-    
-    .main-house-card-info {
+    .house-details {
+      gap: 100px;
+    }
+    .house-actions-sm {
+      display: none
+    }
+    .house-actions {
       display: flex;
-      flex-direction: column;
       gap: 8px;
-      justify-content: center;
-      padding: 30px;
-      background-color: var(--white);
     }
-    
-    .main-house-card-info p {
-      color: var(--dark-grey);
-    }
-    
-    .main-house-card-price {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    
-    .main-house-card-address {
-      margin-bottom: 12px;
-    }
-    
-    .main-house-card-meta {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      font-size: 14.4px;
+    .btn-back-label {
+      font-size: 16px;
+      color: var(--black);
+      font-family: "Montserrat";
       font-weight: 600;
     }
-    .main-house-card-description {
-      padding-top: 10px;
+    .recommended {
+      width: 40%;
+      margin: -20px 0 0 30px;
+    }
+  }
+  /* Small devices */
+  @media (max-width: 768px) {
+    .house-details{
+      flex-direction: column;
+      padding-bottom: 50px;
+    }
+    .main-house-card, .recommended-houses {
+      flex: 100%;
+      position: relative; 
+    }
+    .recommended-houses {
+      padding-inline: 20px;
+    }
+    .main-house-card-info {
+      border-radius: 40px 40px 0px 0px;
+      margin-top: -40px;
+      position: relative;
+    }
+    .recommended-houses {
+      margin-top: 30px;
+    }
+    .btn-back-label {
+      display: none;
     }
     .btn-back {
-      background-color: transparent;
-      padding: 30px 0;
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 10;
+      border-radius: 50%;
+      padding: 8px;
     }
-    .btn-delete, .btn-edit {
-      background-color: transparent;
-      padding: 0 0 0 10px;
-    }
-    .main-house-card-header {
+    .house-actions-sm {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      gap: 8px;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 10;
+      padding: 8px;
     }
-    
-    .recommended-house {
-      background-color: var(--white);
-      position: relative; 
-      margin-bottom: 20px;
-      width: 100%;
-      border-radius: 5px;
-      box-shadow: 0 3px 10px var(--light-grey);
+    .house-actions {
+      display: none
     }
-    .recommended-card-info {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
+    .recommended {
+      width: 90%;
+      margin: 100px auto 
     }
-    .recommended-card-info-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 15px;
-      padding: 10px;
-    }
-
-    /* Large devices */
-    @media (min-width: 769px) {
-
-      .main {
-        width: 100%;
-        max-width: 1300px;
-        margin-inline: auto;
-        padding-inline: 24px;
-        padding-top: 70px;
-      }
-
-      .house-details {
-        gap: 100px;
-      }
-      .house-actions-sm {
-        display: none
-      }
-      .house-actions {
-        display: flex;
-        gap: 8px;
-      }
-      .btn-back-label {
-        font-size: 16px;
-        color: var(--black);
-        font-family: "Montserrat";
-        font-weight: 600;
-      }
-      .recommended {
-        width: 40%;
-        margin: -20px 0 0 30px;
-      }
-    }
-
-    /* Small devices */
-    @media (max-width: 768px) {
-      .house-details{
-        flex-direction: column;
-        padding-bottom: 50px;
-      }
-      .main-house-card, .recommended-houses {
-        flex: 100%;
-        position: relative; 
-      }
-      .recommended-houses {
-        padding-inline: 20px;
-      }
-      .main-house-card-info {
-        border-radius: 40px 40px 0px 0px;
-        margin-top: -40px;
-        position: relative;
-      }
-      .recommended-houses {
-        margin-top: 30px;
-      }
-      .btn-back-label {
-        display: none;
-      }
-      .btn-back {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        z-index: 10;
-        border-radius: 50%;
-        padding: 8px;
-      }
-      .house-actions-sm {
-        display: flex;
-        gap: 8px;
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        z-index: 10;
-        padding: 8px;
-      }
-      .house-actions {
-        display: none
-      }
-      .recommended {
-        width: 90%;
-        margin: 100px auto 
-      }
-    }
-
+  }
 </style>
